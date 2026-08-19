@@ -38,22 +38,21 @@ export function Reveal({
   children,
   className,
   delay = 0,
-  as: Tag = "div",
 }: {
   children: ReactNode;
   className?: string;
   delay?: number;
-  as?: "div" | "span" | "li" | "p";
 }) {
   const { ref, inView } = useInView<HTMLDivElement>(0.05);
   return (
-    <Tag
-      ref={ref as never}
-      style={{ transitionDelay: `${delay}ms` }}
-      className={cn("reveal-mask", inView && "reveal-shown", className)}
-    >
-      {children}
-    </Tag>
+    <div ref={ref} className={className}>
+      <div
+        style={{ transitionDelay: `${delay}ms` }}
+        className={cn("h-full reveal-mask", inView && "reveal-shown")}
+      >
+        {children}
+      </div>
+    </div>
   );
 }
 
