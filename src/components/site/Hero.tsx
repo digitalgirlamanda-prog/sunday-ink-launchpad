@@ -57,7 +57,8 @@ function GoldInk() {
         pointer.x = w * (0.5 + 0.28 * Math.sin(t * 1.1));
         pointer.y = h * (0.42 + 0.26 * Math.cos(t * 0.83));
       }
-      trail.push({ x: pointer.x, y: pointer.y, life: 1, r: 46 + Math.sin(t * 6) * 10 });
+      const baseR = coarse || !interacted ? 120 : 46;
+      trail.push({ x: pointer.x, y: pointer.y, life: 1, r: baseR + Math.sin(t * 6) * 10 });
       if (trail.length > 46) trail.shift();
 
       ctx.clearRect(0, 0, w, h);
@@ -67,8 +68,9 @@ function GoldInk() {
         if (p.life <= 0) continue;
         const rad = p.r * (0.35 + p.life);
         const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, rad);
-        g.addColorStop(0, `rgba(232, 196, 122, ${0.1 * p.life})`);
-        g.addColorStop(0.45, `rgba(198, 154, 74, ${0.06 * p.life})`);
+        const a = coarse || !interacted ? 0.028 : 0.1;
+        g.addColorStop(0, `rgba(232, 196, 122, ${a * p.life})`);
+        g.addColorStop(0.45, `rgba(198, 154, 74, ${a * 0.6 * p.life})`);
         g.addColorStop(1, "rgba(198, 154, 74, 0)");
         ctx.fillStyle = g;
         ctx.beginPath();
@@ -91,7 +93,7 @@ function GoldInk() {
     <canvas
       ref={canvasRef}
       aria-hidden
-      className="pointer-events-none absolute inset-0 h-full w-full opacity-90"
+      className="pointer-events-none absolute inset-0 h-full w-full opacity-80"
     />
   );
 }
