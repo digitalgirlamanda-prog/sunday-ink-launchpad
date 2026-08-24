@@ -7,6 +7,8 @@ import { Transformation } from "@/components/site/Transformation";
 import { Services } from "@/components/site/Services";
 import { Industries } from "@/components/site/Industries";
 import { Work } from "@/components/site/Work";
+import { ListingToBrand } from "@/components/site/ListingToBrand";
+import { RevenueMath } from "@/components/site/RevenueMath";
 import { Craft } from "@/components/site/Craft";
 import { Pricing } from "@/components/site/Pricing";
 import { Contact } from "@/components/site/Contact";
