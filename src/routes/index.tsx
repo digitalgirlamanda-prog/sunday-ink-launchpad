@@ -58,6 +58,8 @@ function Index() {
         <Services />
         <Industries />
         <Work />
+        <ListingToBrand />
+        <RevenueMath />
         <Craft />
         <Pricing />
         <Contact />
