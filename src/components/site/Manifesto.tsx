@@ -1,43 +1,67 @@
-import { useEffect, useRef, useState } from "react";
-import { Reveal, SectionLabel } from "./primitives";
+import { SectionLabel, useSectionProgress } from "./primitives";
 import { cn } from "@/lib/utils";
 
 const STATEMENTS = [
-  { word: "Beautiful", tail: "gets attention." },
-  { word: "Clear", tail: "earns trust." },
-  { word: "Strategy", tail: "creates action." },
-  { word: "We build", tail: "for all three." },
+  {
+    word: "Beautiful",
+    tail: "gets attention.",
+    accent: "text-gold-foil",
+    tint: "oklch(0.79 0.108 84 / 7%)",
+    bar: "bg-gold",
+  },
+  {
+    word: "Clear",
+    tail: "earns trust.",
+    accent: "text-ivory [text-shadow:0_0_60px_oklch(0.955_0.014_85/35%)]",
+    tint: "oklch(0.955 0.014 85 / 5%)",
+    bar: "bg-ivory",
+  },
+  {
+    word: "Strategy",
+    tail: "creates action.",
+    accent: "text-oxblood-bright",
+    tint: "oklch(0.55 0.17 27 / 9%)",
+    bar: "bg-oxblood-bright",
+  },
+  {
+    word: "We build",
+    tail: "for all three.",
+    accent: "text-gold-foil",
+    tint: "oklch(0.79 0.108 84 / 7%)",
+    bar: "bg-gold",
+  },
 ];
 
 export function Manifesto() {
-  const wrapRef = useRef<HTMLDivElement | null>(null);
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    const on = () => {
-      const el = wrapRef.current;
-      if (!el) return;
-      const r = el.getBoundingClientRect();
-      const total = r.height - window.innerHeight;
-      const p = total > 0 ? Math.min(Math.max(-r.top / total, 0), 1) : 0;
-      setProgress(p);
-    };
-    on();
-    window.addEventListener("scroll", on, { passive: true });
-    window.addEventListener("resize", on);
-    return () => {
-      window.removeEventListener("scroll", on);
-      window.removeEventListener("resize", on);
-    };
-  }, []);
-
-  const active = Math.min(STATEMENTS.length - 1, Math.floor(progress * STATEMENTS.length * 0.999));
+  const { ref, progress } = useSectionProgress<HTMLDivElement>();
+  const active = Math.min(
+    STATEMENTS.length - 1,
+    Math.floor(progress * STATEMENTS.length * 0.999),
+  );
+  const current = STATEMENTS[active]!;
 
   return (
     <section id="approach" className="relative bg-ink-deep">
-      <div ref={wrapRef} className="relative h-[340vh] md:h-[400vh]">
+      <div ref={ref} className="relative h-[340vh] md:h-[400vh]">
         <div className="surface-grain sticky top-0 flex h-[100svh] flex-col justify-center overflow-hidden px-5 md:px-10">
-          <div className="mx-auto w-full max-w-[110rem]">
+          {/* Selective color flood per statement */}
+          <div
+            aria-hidden
+            className="absolute inset-0 transition-[background] duration-1000"
+            style={{
+              background: `radial-gradient(90rem 60rem at 30% 55%, ${current.tint}, transparent 70%)`,
+            }}
+          />
+          {/* Giant chapter numeral */}
+          <span
+            aria-hidden
+            className="pointer-events-none absolute right-[-2rem] top-1/2 hidden -translate-y-1/2 select-none font-display text-[24rem] leading-none md:block"
+            style={{ WebkitTextStroke: "1px oklch(0.955 0.014 85 / 10%)", color: "transparent" }}
+          >
+            0{active + 1}
+          </span>
+
+          <div className="relative mx-auto w-full max-w-[110rem]">
             <SectionLabel>Beautiful isn&rsquo;t the goal</SectionLabel>
 
             <div className="relative mt-10 h-[42vh] md:h-[46vh]">
@@ -55,7 +79,7 @@ export function Manifesto() {
                   )}
                 >
                   <p className="font-display text-[clamp(2.6rem,10vw,9rem)] leading-[0.9] tracking-[-0.02em] text-ivory">
-                    <span className="italic text-gold-foil">{s.word}</span>
+                    <span className={cn("italic", s.accent)}>{s.word}</span>
                     <br />
                     {s.tail}
                   </p>
@@ -69,7 +93,7 @@ export function Manifesto() {
                   key={s.word}
                   className={cn(
                     "h-px flex-1 origin-left bg-border transition-all duration-700",
-                    i <= active && "bg-gold",
+                    i <= active && s.bar,
                   )}
                 />
               ))}

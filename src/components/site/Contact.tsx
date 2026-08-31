@@ -21,15 +21,16 @@ const BUDGETS = [
 ];
 
 const fieldClass =
-  "w-full border-0 border-b border-border bg-transparent px-0 py-3 text-ivory placeholder:text-muted-foreground/60 transition-colors duration-500 focus:border-gold focus:outline-none";
+  "w-full border-0 border-b border-paper-line bg-transparent px-0 py-3 text-ink placeholder:text-ink-soft/50 transition-colors duration-500 focus:border-oxblood focus:outline-none";
 
 export function Contact() {
   const [sending, setSending] = useState(false);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
     setSending(true);
-    const data = new FormData(e.currentTarget);
+    const data = new FormData(form);
     const name = String(data.get("name") ?? "");
     setTimeout(() => {
       setSending(false);
@@ -37,13 +38,19 @@ export function Contact() {
         `Thanks${name ? `, ${name.split(" ")[0]}` : ""} — your project details are on their way.`,
         { description: "We reply personally, usually within one business day." },
       );
-      e.currentTarget?.reset?.();
+      form.reset();
     }, 600);
   };
 
   return (
-    <section id="start" className="surface-grain relative bg-ink px-5 py-24 md:px-10 md:py-36">
-      <div className="mx-auto grid max-w-[110rem] gap-14 lg:grid-cols-[1fr_1fr] lg:gap-24">
+    <section id="start" className="surface-grain relative overflow-hidden bg-ink px-5 py-24 md:px-10 md:py-36">
+      <span
+        aria-hidden
+        className="pointer-events-none absolute bottom-[-10rem] left-[-4rem] select-none font-display text-[32rem] italic leading-none text-gold/[0.05]"
+      >
+        &amp;
+      </span>
+      <div className="relative mx-auto grid max-w-[110rem] gap-14 lg:grid-cols-[1fr_1fr] lg:gap-24">
         <div>
           <Reveal>
             <SectionLabel>Start your project</SectionLabel>
@@ -61,98 +68,106 @@ export function Contact() {
             </p>
           </Reveal>
           <Reveal delay={200}>
-            <a
-              href="#start"
-              className="rule-draw mt-8 inline-block text-sm text-gold"
-            >
+            <a href="#start" className="rule-draw mt-8 inline-block text-sm text-gold">
               Not sure what you need? Tell us what isn&rsquo;t working.
             </a>
           </Reveal>
         </div>
 
         <Reveal delay={120}>
-          <form onSubmit={onSubmit} className="space-y-7 border border-border bg-ink-deep p-6 md:p-10">
-            <div className="grid gap-7 sm:grid-cols-2">
-              <div>
-                <label htmlFor="name" className="text-[0.6rem] uppercase tracking-[0.3em] text-gold">
-                  Name
-                </label>
-                <input id="name" name="name" required autoComplete="name" className={fieldClass} placeholder="Your name" />
-              </div>
-              <div>
-                <label htmlFor="business" className="text-[0.6rem] uppercase tracking-[0.3em] text-gold">
-                  Business name
-                </label>
-                <input id="business" name="business" required className={fieldClass} placeholder="Business name" />
-              </div>
-            </div>
-
-            <div className="grid gap-7 sm:grid-cols-2">
-              <div>
-                <label htmlFor="email" className="text-[0.6rem] uppercase tracking-[0.3em] text-gold">
-                  Email
-                </label>
-                <input id="email" name="email" type="email" required autoComplete="email" className={fieldClass} placeholder="you@business.com" />
-              </div>
-              <div>
-                <label htmlFor="url" className="text-[0.6rem] uppercase tracking-[0.3em] text-gold">
-                  Website / social <span className="text-muted-foreground/60">(optional)</span>
-                </label>
-                <input id="url" name="url" className={fieldClass} placeholder="link" />
-              </div>
-            </div>
-
-            <div className="grid gap-7 sm:grid-cols-2">
-              <div>
-                <label htmlFor="need" className="text-[0.6rem] uppercase tracking-[0.3em] text-gold">
-                  What do you need?
-                </label>
-                <select id="need" name="need" required defaultValue="" className={`${fieldClass} [&>option]:bg-ink`}>
-                  <option value="" disabled>
-                    Select one
-                  </option>
-                  {NEEDS.map((n) => (
-                    <option key={n}>{n}</option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label htmlFor="budget" className="text-[0.6rem] uppercase tracking-[0.3em] text-gold">
-                  Approximate budget
-                </label>
-                <select id="budget" name="budget" required defaultValue="" className={`${fieldClass} [&>option]:bg-ink`}>
-                  <option value="" disabled>
-                    Select a range
-                  </option>
-                  {BUDGETS.map((b) => (
-                    <option key={b}>{b}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="details" className="text-[0.6rem] uppercase tracking-[0.3em] text-gold">
-                Project description
-              </label>
-              <textarea
-                id="details"
-                name="details"
-                rows={4}
-                required
-                className={`${fieldClass} resize-none`}
-                placeholder="What are you selling, who buys it, and what isn't working right now?"
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={sending}
-              className="group w-full bg-gold px-8 py-5 text-[0.72rem] uppercase tracking-[0.32em] text-ink transition-colors duration-500 hover:bg-gold-bright disabled:opacity-60"
+          {/* The brief sheet */}
+          <div className="relative">
+            <form
+              onSubmit={onSubmit}
+              className="paper-grain relative rotate-[-0.5deg] space-y-7 bg-paper p-6 text-ink md:p-10"
+              style={{ boxShadow: "var(--shadow-paper)" }}
             >
-              {sending ? "Sending…" : "Start my project"}
-            </button>
-          </form>
+              <p className="text-[0.55rem] uppercase tracking-[0.34em] text-ink-soft/60">
+                Sunday &amp; Ink — project brief
+              </p>
+              <div className="grid gap-7 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="name" className="text-[0.6rem] uppercase tracking-[0.3em] text-oxblood">
+                    Name
+                  </label>
+                  <input id="name" name="name" required autoComplete="name" className={fieldClass} placeholder="Your name" />
+                </div>
+                <div>
+                  <label htmlFor="business" className="text-[0.6rem] uppercase tracking-[0.3em] text-oxblood">
+                    Business name
+                  </label>
+                  <input id="business" name="business" required className={fieldClass} placeholder="Business name" />
+                </div>
+              </div>
+
+              <div className="grid gap-7 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="email" className="text-[0.6rem] uppercase tracking-[0.3em] text-oxblood">
+                    Email
+                  </label>
+                  <input id="email" name="email" type="email" required autoComplete="email" className={fieldClass} placeholder="you@business.com" />
+                </div>
+                <div>
+                  <label htmlFor="url" className="text-[0.6rem] uppercase tracking-[0.3em] text-oxblood">
+                    Website / social <span className="text-ink-soft/50">(optional)</span>
+                  </label>
+                  <input id="url" name="url" className={fieldClass} placeholder="link" />
+                </div>
+              </div>
+
+              <div className="grid gap-7 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="need" className="text-[0.6rem] uppercase tracking-[0.3em] text-oxblood">
+                    What do you need?
+                  </label>
+                  <select id="need" name="need" required defaultValue="" className={`${fieldClass} [&>option]:bg-paper`}>
+                    <option value="" disabled>
+                      Select one
+                    </option>
+                    {NEEDS.map((n) => (
+                      <option key={n}>{n}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="budget" className="text-[0.6rem] uppercase tracking-[0.3em] text-oxblood">
+                    Approximate budget
+                  </label>
+                  <select id="budget" name="budget" required defaultValue="" className={`${fieldClass} [&>option]:bg-paper`}>
+                    <option value="" disabled>
+                      Select a range
+                    </option>
+                    {BUDGETS.map((b) => (
+                      <option key={b}>{b}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="details" className="text-[0.6rem] uppercase tracking-[0.3em] text-oxblood">
+                  Project description
+                </label>
+                <textarea
+                  id="details"
+                  name="details"
+                  rows={4}
+                  required
+                  className={`${fieldClass} resize-none`}
+                  placeholder="What are you selling, who buys it, and what isn't working right now?"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={sending}
+                className="w-full bg-ink px-8 py-5 text-[0.72rem] uppercase tracking-[0.32em] text-ivory transition-colors duration-500 hover:bg-oxblood active:scale-[0.99] disabled:opacity-60"
+              >
+                {sending ? "Sending…" : "Start my project"}
+              </button>
+            </form>
+            <span className="stamp absolute -top-3 right-4 text-gold">New project</span>
+          </div>
         </Reveal>
       </div>
     </section>

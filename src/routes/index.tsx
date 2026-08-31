@@ -3,16 +3,17 @@ import { Preloader } from "@/components/site/Preloader";
 import { Nav, ScrollProgress } from "@/components/site/Chrome";
 import { Hero } from "@/components/site/Hero";
 import { Manifesto } from "@/components/site/Manifesto";
-import { Transformation } from "@/components/site/Transformation";
-import { Services } from "@/components/site/Services";
-import { Industries } from "@/components/site/Industries";
+import { Shift } from "@/components/site/Shift";
 import { Work } from "@/components/site/Work";
-import { ListingToBrand } from "@/components/site/ListingToBrand";
+import { Services } from "@/components/site/Services";
+import { Specialty } from "@/components/site/Specialty";
 import { RevenueMath } from "@/components/site/RevenueMath";
+import { Industries } from "@/components/site/Industries";
 import { Craft } from "@/components/site/Craft";
 import { Pricing } from "@/components/site/Pricing";
 import { Contact } from "@/components/site/Contact";
 import { Footer } from "@/components/site/Footer";
+import duskImg from "@/assets/specialty-dusk.jpg";
 
 const TITLE = "Sunday & Ink — Websites. Brands. Beautifully Built.";
 const DESCRIPTION =
@@ -27,6 +28,10 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+    ],
+    links: [
+      // Hero LCP: photography inside the ampersand letterform
+      { rel: "preload", as: "image", href: duskImg },
     ],
     scripts: [
       {
@@ -54,12 +59,12 @@ function Index() {
       <main>
         <Hero />
         <Manifesto />
-        <Transformation />
-        <Services />
-        <Industries />
+        <Shift />
         <Work />
-        <ListingToBrand />
+        <Services />
+        <Specialty />
         <RevenueMath />
+        <Industries />
         <Craft />
         <Pricing />
         <Contact />
