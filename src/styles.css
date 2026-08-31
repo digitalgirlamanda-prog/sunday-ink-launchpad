@@ -5,17 +5,14 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Design system definition.
+ * SUNDAY & INK — design system
  *
- * The @theme inline block maps CSS custom properties to Tailwind utility
- * classes (e.g. --color-primary -> bg-primary, text-primary).
- *
- * The :root and .dark blocks define the actual color values using oklch.
- * All colors MUST use oklch format.
- *
- * To add a new semantic color:
- * 1. Add the variable to :root (light value) and .dark (dark value)
- * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ * Chapters, not one endless black page:
+ *   ink      — deep warm black (anchor)
+ *   paper    — warm gallery paper (light chapters)
+ *   oxblood  — editorial accent, used as a flood in one chapter + notations
+ *   moss     — quiet notation green, tiny doses
+ *   gold     — a highlight, no longer the whole personality
  */
 
 @theme inline {
@@ -63,14 +60,27 @@
 
 :root {
   --radius: 0.625rem;
-  /* SUNDAY & INK — ink black, warm ivory, brushed gold */
-  --ink: oklch(0.13 0.009 65);
-  --ink-deep: oklch(0.09 0.008 65);
-  --ink-raised: oklch(0.18 0.011 68);
+
+  /* Anchors */
+  --ink: oklch(0.14 0.01 60);
+  --ink-deep: oklch(0.1 0.009 60);
+  --ink-raised: oklch(0.19 0.012 65);
+
+  /* Paper chapters */
+  --paper: oklch(0.945 0.018 88);
+  --paper-shade: oklch(0.9 0.024 84);
+  --ink-soft: oklch(0.34 0.014 60);
+  --paper-line: oklch(0.2 0.012 60 / 16%);
+
+  /* Voice colors */
   --ivory: oklch(0.955 0.014 85);
   --gold: oklch(0.79 0.108 84);
   --gold-bright: oklch(0.9 0.085 92);
   --gold-deep: oklch(0.62 0.098 72);
+  --oxblood: oklch(0.42 0.14 26);
+  --oxblood-deep: oklch(0.29 0.1 24);
+  --oxblood-bright: oklch(0.55 0.17 27);
+  --moss: oklch(0.47 0.07 135);
 
   --background: var(--ink);
   --foreground: var(--ivory);
@@ -79,7 +89,7 @@
   --popover: var(--ink-raised);
   --popover-foreground: var(--ivory);
   --primary: var(--gold);
-  --primary-foreground: oklch(0.13 0.009 65);
+  --primary-foreground: oklch(0.14 0.01 60);
   --secondary: oklch(0.22 0.012 68);
   --secondary-foreground: var(--ivory);
   --muted: oklch(0.22 0.012 68);
@@ -103,8 +113,10 @@
     oklch(0.95 0.06 95) 66%,
     oklch(0.66 0.1 74)
   );
-  --gradient-ink: linear-gradient(180deg, oklch(0.09 0.008 65), oklch(0.15 0.01 68));
+  --gradient-ink: linear-gradient(180deg, oklch(0.1 0.009 60), oklch(0.15 0.01 64));
+  --gradient-oxblood: linear-gradient(160deg, oklch(0.33 0.115 25), oklch(0.24 0.085 22));
   --shadow-lift: 0 40px 90px -40px oklch(0 0 0 / 85%);
+  --shadow-paper: 0 30px 80px -30px oklch(0.2 0.04 40 / 35%);
   --shadow-gold: 0 24px 70px -30px oklch(0.79 0.108 84 / 45%);
   --ease-ink: cubic-bezier(0.16, 0.84, 0.28, 1);
   --chart-1: oklch(0.646 0.222 41.116);
@@ -171,7 +183,7 @@
   }
 
   ::selection {
-    background: oklch(0.79 0.108 84 / 42%);
+    background: oklch(0.42 0.14 26 / 85%);
     color: var(--ivory);
   }
 
@@ -189,10 +201,18 @@
   --color-ink: var(--ink);
   --color-ink-deep: var(--ink-deep);
   --color-ink-raised: var(--ink-raised);
+  --color-ink-soft: var(--ink-soft);
+  --color-paper: var(--paper);
+  --color-paper-shade: var(--paper-shade);
+  --color-paper-line: var(--paper-line);
   --color-ivory: var(--ivory);
   --color-gold: var(--gold);
   --color-gold-bright: var(--gold-bright);
   --color-gold-deep: var(--gold-deep);
+  --color-oxblood: var(--oxblood);
+  --color-oxblood-deep: var(--oxblood-deep);
+  --color-oxblood-bright: var(--oxblood-bright);
+  --color-moss: var(--moss);
   --font-display: var(--font-display);
   --font-sans: var(--font-sans);
 }
@@ -206,6 +226,7 @@
   animation: foil-shift 9s var(--ease-ink) infinite alternate;
 }
 
+/* Grain for dark chapters */
 @utility surface-grain {
   position: relative;
   &::after {
@@ -216,6 +237,20 @@
     opacity: 0.32;
     mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+}
+
+/* Grain for paper chapters — multiply so it reads as paper tooth */
+@utility paper-grain {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.16'/%3E%3C/svg%3E");
   }
 }
 
@@ -255,6 +290,30 @@
   transform: translateY(0);
 }
 
+/* Outlined display type (fills on select/hover from components) */
+@utility text-outline-ivory {
+  -webkit-text-stroke: 1px oklch(0.955 0.014 85 / 55%);
+  color: transparent;
+}
+
+@utility text-outline-ink {
+  -webkit-text-stroke: 1px oklch(0.2 0.012 60 / 60%);
+  color: transparent;
+}
+
+/* Rubber-stamp notation */
+@utility stamp {
+  display: inline-block;
+  border: 1.5px solid currentColor;
+  border-radius: 2px;
+  padding: 0.35em 0.7em;
+  font-size: 0.58rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  transform: rotate(-3deg);
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.4' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.9 0.08'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23r)'/%3E%3C/svg%3E");
+}
+
 @keyframes foil-shift {
   from {
     background-position: 0% 50%;
@@ -282,6 +341,43 @@
   }
   100% {
     transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes marquee-left {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes amp-breathe {
+  0%,
+  100% {
+    background-position: 50% 40%;
+  }
+  50% {
+    background-position: 50% 60%;
+  }
+}
+
+@keyframes hero-line {
+  from {
+    transform: translateY(105%) rotate(2deg);
+  }
+  to {
+    transform: translateY(0) rotate(0);
   }
 }
 

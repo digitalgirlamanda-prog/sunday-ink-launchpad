@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useReducedMotion } from "./primitives";
 
+/** Micro brand reveal: ~650ms total, never blocks interaction. */
 export function Preloader() {
   const reduced = useReducedMotion();
-  const [phase, setPhase] = useState(0);
+  const [fading, setFading] = useState(false);
   const [gone, setGone] = useState(false);
 
   useEffect(() => {
@@ -11,13 +12,11 @@ export function Preloader() {
       setGone(true);
       return;
     }
-    const t1 = setTimeout(() => setPhase(1), 420);
-    const t2 = setTimeout(() => setPhase(2), 1180);
-    const t3 = setTimeout(() => setGone(true), 1900);
+    const t1 = setTimeout(() => setFading(true), 380);
+    const t2 = setTimeout(() => setGone(true), 700);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
-      clearTimeout(t3);
     };
   }, [reduced]);
 
@@ -26,51 +25,20 @@ export function Preloader() {
   return (
     <div
       aria-hidden
-      className="surface-grain fixed inset-0 z-[100] flex items-center justify-center bg-ink-deep transition-opacity duration-700 [transition-timing-function:var(--ease-ink)]"
-      style={{ opacity: phase === 2 ? 0 : 1 }}
+      className="pointer-events-none fixed inset-0 z-[100] flex items-center justify-center bg-ink-deep transition-opacity duration-300 [transition-timing-function:var(--ease-ink)]"
+      style={{ opacity: fading ? 0 : 1 }}
     >
-      <div className="relative flex flex-col items-center">
-        <svg viewBox="0 0 400 120" className="w-[min(70vw,520px)]">
-          <defs>
-            <linearGradient id="pl-gold" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="oklch(0.62 0.098 72)" />
-              <stop offset="45%" stopColor="oklch(0.93 0.08 92)" />
-              <stop offset="100%" stopColor="oklch(0.68 0.1 76)" />
-            </linearGradient>
-          </defs>
-          <path
-            d="M10 96 C120 96 280 96 390 96"
-            fill="none"
-            stroke="url(#pl-gold)"
-            strokeWidth="1.4"
-            strokeDasharray="400"
-            style={{ animation: "ink-draw 0.9s var(--ease-ink) forwards", ["--dash" as string]: "400" }}
-          />
-          <text
-            x="200"
-            y="80"
-            textAnchor="middle"
-            fill="url(#pl-gold)"
-            fontFamily="var(--font-display)"
-            fontStyle="italic"
-            fontSize="96"
-            opacity={phase >= 1 ? 1 : 0}
-            style={{
-              transition: "opacity 0.9s var(--ease-ink), transform 0.9s var(--ease-ink)",
-            }}
-          >
-            &amp;
-          </text>
-        </svg>
-        <p
-          className="mt-6 text-[0.7rem] uppercase tracking-[0.55em] text-ivory transition-all duration-700 [transition-timing-function:var(--ease-ink)]"
-          style={{
-            opacity: phase >= 1 ? 1 : 0,
-            letterSpacing: phase >= 1 ? "0.55em" : "0.9em",
-          }}
+      <div className="flex items-baseline gap-3">
+        <span className="font-display text-2xl tracking-[0.2em] text-ivory md:text-3xl">
+          SUNDAY
+        </span>
+        <span
+          className="font-display text-4xl italic text-gold-foil md:text-5xl"
+          style={{ animation: "splatter-in 0.35s var(--ease-ink) both" }}
         >
-          Sunday &amp; Ink
-        </p>
+          &amp;
+        </span>
+        <span className="font-display text-2xl tracking-[0.2em] text-ivory md:text-3xl">INK</span>
       </div>
     </div>
   );

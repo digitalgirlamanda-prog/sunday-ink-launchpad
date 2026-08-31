@@ -27,7 +27,7 @@ export function Footer() {
                 ["Web design", "#services"],
                 ["Brand identity", "#services"],
                 ["Digital growth", "#services"],
-                ["Vacation rentals", "#services"],
+                ["Vacation rentals", "#specialty"],
                 ["Pricing", "#pricing"],
               ].map(([label, href]) => (
                 <li key={label}>
@@ -46,8 +46,9 @@ export function Footer() {
             <ul className="mt-5 space-y-3 text-sm">
               {[
                 ["Knoll House", "https://knoll-house-atlas.lovable.app"],
-                ["Brookhurst", "https://lakehouse-direct-escape.lovable.app"],
-                ["Sanctuary Digital", "https://gilded-gateway-luxe.lovable.app"],
+                ["Tiki Waikiki", "https://tiki-waikiki-dream.lovable.app"],
+                ["Harry's Lake House", "https://poconolakeescape.com"],
+                ["Noah's House", "https://ethereal-web.lovable.app"],
               ].map(([label, href]) => (
                 <li key={label}>
                   <a

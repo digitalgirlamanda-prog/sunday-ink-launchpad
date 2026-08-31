@@ -34,6 +34,34 @@ export function useInView<T extends HTMLElement>(threshold = 0.08) {
   return { ref, inView };
 }
 
+/** 0→1 progress of a tall wrapper scrolling through the viewport (for sticky scenes). */
+export function useSectionProgress<T extends HTMLElement>() {
+  const ref = useRef<T | null>(null);
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    let raf = 0;
+    const on = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const el = ref.current;
+        if (!el) return;
+        const r = el.getBoundingClientRect();
+        const total = r.height - window.innerHeight;
+        setProgress(total > 0 ? Math.min(Math.max(-r.top / total, 0), 1) : 0);
+      });
+    };
+    on();
+    window.addEventListener("scroll", on, { passive: true });
+    window.addEventListener("resize", on);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", on);
+      window.removeEventListener("resize", on);
+    };
+  }, []);
+  return { ref, progress };
+}
+
 export function Reveal({
   children,
   className,
@@ -56,6 +84,15 @@ export function Reveal({
   );
 }
 
+const LINK_VARIANTS = {
+  gold: "bg-gold text-ink hover:bg-gold-bright",
+  ghost: "border border-border text-ivory hover:border-gold hover:text-gold-bright",
+  ink: "bg-ink text-ivory hover:bg-oxblood",
+  "ghost-ink":
+    "border border-[oklch(0.2_0.012_60/35%)] text-ink hover:border-oxblood hover:text-oxblood",
+  oxblood: "bg-oxblood text-ivory hover:bg-oxblood-bright",
+} as const;
+
 /** Magnetic CTA with spring-ish easing; disabled for touch + reduced motion. */
 export function MagneticLink({
   children,
@@ -67,7 +104,7 @@ export function MagneticLink({
 }: {
   children: ReactNode;
   href: string;
-  variant?: "gold" | "ghost";
+  variant?: keyof typeof LINK_VARIANTS;
   className?: string;
   target?: string;
   onClick?: () => void;
@@ -97,28 +134,42 @@ export function MagneticLink({
       onMouseLeave={reset}
       onClick={onClick}
       className={cn(
-        "group relative inline-flex items-center justify-center gap-3 px-8 py-4 text-[0.72rem] font-medium uppercase tracking-[0.28em] transition-[transform,background-color,color] duration-500 [transition-timing-function:var(--ease-ink)]",
-        variant === "gold"
-          ? "bg-gold text-ink hover:bg-gold-bright"
-          : "border border-border text-ivory hover:border-gold hover:text-gold-bright",
+        "group relative inline-flex items-center justify-center gap-3 px-8 py-4 text-[0.72rem] font-medium uppercase tracking-[0.28em] transition-[transform,background-color,color,border-color] duration-500 [transition-timing-function:var(--ease-ink)] active:scale-[0.97]",
+        LINK_VARIANTS[variant],
         className,
       )}
     >
       <span className="relative z-10">{children}</span>
       <span
         aria-hidden
-        className={cn(
-          "h-px w-6 origin-left scale-x-50 bg-current transition-transform duration-500 [transition-timing-function:var(--ease-ink)] group-hover:scale-x-100",
-        )}
+        className="h-px w-6 origin-left scale-x-50 bg-current transition-transform duration-500 [transition-timing-function:var(--ease-ink)] group-hover:scale-x-100"
       />
     </a>
   );
 }
 
-export function SectionLabel({ children }: { children: ReactNode }) {
+const LABEL_TONES = {
+  gold: "text-gold",
+  oxblood: "text-oxblood",
+  moss: "text-moss",
+  ivory: "text-ivory",
+} as const;
+
+export function SectionLabel({
+  children,
+  tone = "gold",
+}: {
+  children: ReactNode;
+  tone?: keyof typeof LABEL_TONES;
+}) {
   return (
-    <span className="inline-flex items-center gap-3 text-[0.65rem] uppercase tracking-[0.42em] text-gold">
-      <span aria-hidden className="h-px w-8 bg-gold/70" />
+    <span
+      className={cn(
+        "inline-flex items-center gap-3 text-[0.65rem] uppercase tracking-[0.42em]",
+        LABEL_TONES[tone],
+      )}
+    >
+      <span aria-hidden className="h-px w-8 bg-current opacity-70" />
       {children}
     </span>
   );

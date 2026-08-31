@@ -7,6 +7,7 @@ const SERVICES = [
     id: "web",
     index: "01",
     title: "WEB DESIGN",
+    accent: "websites",
     line: "Custom websites built around the action your business needs.",
     body: "Structure, hierarchy, and copy flow designed around one visitor journey. Mobile-first, fast, and built so the next step is always obvious.",
     points: [
@@ -20,6 +21,7 @@ const SERVICES = [
     id: "brand",
     index: "02",
     title: "BRAND IDENTITY",
+    accent: "identity",
     line: "Visual systems people remember after they close the tab.",
     body: "Logo, type, palette, and the rules that keep everything consistent — from your site to your signage, listings, and social presence.",
     points: [
@@ -33,6 +35,7 @@ const SERVICES = [
     id: "growth",
     index: "03",
     title: "DIGITAL GROWTH",
+    accent: "growth",
     line: "The work that continues after launch day.",
     body: "SEO foundations, social assets and management, ongoing optimization and support — so your presence keeps improving instead of aging out.",
     points: [
@@ -45,112 +48,110 @@ const SERVICES = [
 ];
 
 export function Services() {
-  const [open, setOpen] = useState("web");
+  const [active, setActive] = useState("web");
+  const current = SERVICES.find((s) => s.id === active) ?? SERVICES[0]!;
 
   return (
-    <section id="services" className="surface-grain relative bg-ink-deep px-5 py-24 md:px-10 md:py-36">
-      <div className="mx-auto max-w-[110rem]">
+    <section id="services" className="paper-grain relative overflow-hidden bg-paper px-5 py-24 text-ink md:px-10 md:py-36">
+      {/* Giant index numeral behind the content */}
+      <span
+        aria-hidden
+        key={`num-${current.id}`}
+        className="pointer-events-none absolute right-[-1rem] top-16 select-none font-display text-[16rem] leading-none md:right-6 md:top-10 md:text-[30rem] animate-in fade-in duration-700"
+        style={{ WebkitTextStroke: "1px oklch(0.2 0.012 60 / 12%)", color: "transparent" }}
+      >
+        {current.index}
+      </span>
+
+      <div className="relative mx-auto max-w-[110rem]">
         <Reveal>
-          <SectionLabel>What we make</SectionLabel>
+          <SectionLabel tone="oxblood">What we make</SectionLabel>
         </Reveal>
         <Reveal delay={80}>
-          <h2 className="mt-6 max-w-4xl font-display text-[clamp(2.1rem,6.4vw,5.4rem)] leading-[0.92] text-ivory">
-            THREE WAYS WE MAKE YOU{" "}
-            <span className="italic text-gold-foil">unmistakable.</span>
+          <h2 className="mt-6 max-w-4xl font-display text-[clamp(2.1rem,6.4vw,5.4rem)] leading-[0.92]">
+            THREE WAYS WE MAKE YOU <span className="italic text-oxblood">unmistakable.</span>
           </h2>
         </Reveal>
 
-        <div className="mt-14 border-t border-border">
-          {SERVICES.map((s) => {
-            const isOpen = open === s.id;
-            return (
-              <div key={s.id} className="border-b border-border">
-                <button
-                  type="button"
-                  onClick={() => setOpen(isOpen ? "" : s.id)}
-                  aria-expanded={isOpen}
-                  className="group flex w-full items-center gap-5 py-7 text-left md:gap-10 md:py-10"
-                >
-                  <span className="font-sans text-[0.65rem] tracking-[0.3em] text-gold">
-                    {s.index}
-                  </span>
-                  <span
+        <div className="mt-14 grid gap-12 lg:grid-cols-[1.15fr_1fr] lg:gap-20">
+          {/* Oversized word list */}
+          <div className="flex flex-col items-start gap-2 md:gap-4" role="tablist" aria-label="Services">
+            {SERVICES.map((s) => {
+              const isActive = s.id === active;
+              return (
+                <div key={s.id} className="w-full">
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    onClick={() => setActive(s.id)}
+                    className="group flex w-full items-baseline gap-4 text-left md:gap-6"
+                  >
+                    <span
+                      className={cn(
+                        "text-[0.62rem] tracking-[0.3em] transition-colors duration-500",
+                        isActive ? "text-oxblood" : "text-ink-soft/40",
+                      )}
+                    >
+                      {s.index}
+                    </span>
+                    <span
+                      className={cn(
+                        "font-display text-[clamp(2.1rem,7vw,5.6rem)] leading-[0.98] transition-all duration-700 [transition-timing-function:var(--ease-ink)]",
+                        isActive
+                          ? "translate-x-2 text-ink md:translate-x-4"
+                          : "text-outline-ink group-hover:text-ink-soft/70 group-hover:[-webkit-text-stroke-width:0]",
+                      )}
+                    >
+                      {s.title}
+                    </span>
+                  </button>
+                  {/* Mobile: content recomposes under the selected word */}
+                  <div
                     className={cn(
-                      "flex-1 font-display text-[clamp(1.7rem,5.4vw,4.2rem)] leading-none transition-colors duration-500",
-                      isOpen ? "text-gold-foil" : "text-ivory group-hover:text-gold",
+                      "grid overflow-hidden pl-8 transition-[grid-template-rows,opacity] duration-700 [transition-timing-function:var(--ease-ink)] lg:hidden",
+                      isActive ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
                     )}
                   >
-                    {s.title}
-                  </span>
-                  <span
-                    aria-hidden
-                    className={cn(
-                      "shrink-0 text-2xl text-gold transition-transform duration-500 [transition-timing-function:var(--ease-ink)]",
-                      isOpen && "rotate-45",
-                    )}
-                  >
-                    +
-                  </span>
-                </button>
-
-                <div
-                  className={cn(
-                    "grid overflow-hidden transition-[grid-template-rows,opacity] duration-700 [transition-timing-function:var(--ease-ink)]",
-                    isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
-                  )}
-                >
-                  <div className="min-h-0">
-                    <div className="grid gap-8 pb-10 md:grid-cols-[1.1fr_1fr] md:gap-16 md:pl-[4.5rem]">
-                      <div>
-                        <p className="font-display text-xl leading-snug text-ivory md:text-2xl">
-                          {s.line}
-                        </p>
-                        <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">
-                          {s.body}
-                        </p>
-                        <div className="mt-8">
-                          <MagneticLink href="#start" variant="ghost">
-                            Discuss this
-                          </MagneticLink>
-                        </div>
-                      </div>
-                      <ul className="space-y-3 border-l border-border pl-6">
-                        {s.points.map((p) => (
-                          <li
-                            key={p}
-                            className="flex gap-3 text-sm text-muted-foreground"
-                          >
-                            <span aria-hidden className="mt-[0.55em] h-px w-4 shrink-0 bg-gold" />
-                            {p}
-                          </li>
-                        ))}
-                      </ul>
+                    <div className="min-h-0">
+                      <ServiceBody s={s} />
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
-
-        <Reveal delay={120}>
-          <div className="mt-14 flex flex-col gap-8 border border-border bg-ink p-7 md:flex-row md:items-center md:justify-between md:p-12">
-            <div className="max-w-2xl">
-              <SectionLabel>Specialty</SectionLabel>
-              <h3 className="mt-4 font-display text-3xl leading-tight text-ivory md:text-5xl">
-                VACATION RENTALS &amp;{" "}
-                <span className="italic text-gold-foil">direct booking.</span>
-              </h3>
-              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                A dedicated path for owners who want a property brand of their own instead of a
-                marketplace listing: direct booking integration, property storytelling, guest-first
-                structure, and the details that make a stay feel worth the rate.
-              </p>
-            </div>
-            <MagneticLink href="#start">Rental owners start here</MagneticLink>
+              );
+            })}
           </div>
-        </Reveal>
+
+          {/* Desktop: recomposing editorial panel */}
+          <div className="relative hidden border-l border-oxblood/30 pl-10 lg:block xl:pl-16">
+            <div key={current.id} className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <ServiceBody s={current} />
+            </div>
+          </div>
+        </div>
       </div>
     </section>
+  );
+}
+
+function ServiceBody({ s }: { s: (typeof SERVICES)[number] }) {
+  return (
+    <div className="pb-6 pt-4 lg:pb-0 lg:pt-2">
+      <p className="max-w-md font-display text-xl leading-snug md:text-3xl">{s.line}</p>
+      <p className="mt-4 max-w-md text-sm leading-relaxed text-ink-soft md:text-base">{s.body}</p>
+      <p className="mt-7 max-w-md text-sm leading-loose text-ink-soft">
+        {s.points.map((pt, i) => (
+          <span key={pt}>
+            <span className="text-ink">{pt}</span>
+            {i < s.points.length - 1 && <span aria-hidden className="mx-2 text-oxblood">·</span>}
+          </span>
+        ))}
+      </p>
+      <div className="mt-8">
+        <MagneticLink href="#start" variant="ink">
+          Discuss {s.accent}
+        </MagneticLink>
+      </div>
+    </div>
   );
 }
