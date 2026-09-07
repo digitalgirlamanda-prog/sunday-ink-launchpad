@@ -1,34 +1,41 @@
 import { SectionLabel, useSectionProgress } from "./primitives";
+import { InkStroke } from "./InkStroke";
 import { cn } from "@/lib/utils";
 
-const STATEMENTS = [
+type Statement = {
+  lines: string[];
+  /** index of the line that carries the Signal mark */
+  mark?: number;
+  kind?: "underline" | "circle" | "scribble";
+  note: string;
+};
+
+const STATEMENTS: Statement[] = [
   {
-    word: "Beautiful",
-    tail: "gets attention.",
-    accent: "text-gold-foil",
-    tint: "oklch(0.79 0.108 84 / 7%)",
-    bar: "bg-gold",
+    lines: ["WE DON'T BUILD", "\u201CJUST A WEBSITE.\u201D"],
+    note: "001 — the premise",
   },
   {
-    word: "Clear",
-    tail: "earns trust.",
-    accent: "text-ivory [text-shadow:0_0_60px_oklch(0.955_0.014_85/35%)]",
-    tint: "oklch(0.955 0.014 85 / 5%)",
-    bar: "bg-ivory",
+    lines: ["WE BUILD THE THING", "THEY REMEMBER."],
+    mark: 1,
+    kind: "underline",
+    note: "002 — memory over decoration",
   },
   {
-    word: "Strategy",
-    tail: "creates action.",
-    accent: "text-oxblood-bright",
-    tint: "oklch(0.55 0.17 27 / 9%)",
-    bar: "bg-oxblood-bright",
+    lines: ["THE THING THEY", "SEND TO SOMEONE ELSE."],
+    note: "003 — the forward",
   },
   {
-    word: "We build",
-    tail: "for all three.",
-    accent: "text-gold-foil",
-    tint: "oklch(0.79 0.108 84 / 7%)",
-    bar: "bg-gold",
+    lines: ["THE THING THAT MAKES", "YOUR COMPETITION", "LOOK A LITTLE BORING."],
+    mark: 2,
+    kind: "scribble",
+    note: "004 — the gap",
+  },
+  {
+    lines: ["RAW.", "REFINED.", "RECOGNIZABLE."],
+    mark: 2,
+    kind: "circle",
+    note: "005 — the studio",
   },
 ];
 
@@ -42,32 +49,27 @@ export function Manifesto() {
 
   return (
     <section id="approach" className="relative bg-ink-deep">
-      <div ref={ref} className="relative h-[340vh] md:h-[400vh]">
+      <div ref={ref} className="relative h-[380vh] md:h-[460vh]">
         <div className="surface-grain sticky top-0 flex h-[100svh] flex-col justify-center overflow-hidden px-5 md:px-10">
-          {/* Selective color flood per statement */}
-          <div
-            aria-hidden
-            className="absolute inset-0 transition-[background] duration-1000"
-            style={{
-              background: `radial-gradient(90rem 60rem at 30% 55%, ${current.tint}, transparent 70%)`,
-            }}
-          />
-          {/* Giant chapter numeral */}
+          {/* Chapter numeral, cropped off the edge */}
           <span
             aria-hidden
-            className="pointer-events-none absolute right-[-2rem] top-1/2 hidden -translate-y-1/2 select-none font-display text-[24rem] leading-none md:block"
-            style={{ WebkitTextStroke: "1px oklch(0.955 0.014 85 / 10%)", color: "transparent" }}
+            className="pointer-events-none absolute right-[-3rem] top-1/2 hidden -translate-y-1/2 select-none font-display text-[26rem] leading-none md:block"
+            style={{ WebkitTextStroke: "1px oklch(0.965 0.008 85 / 9%)", color: "transparent" }}
           >
             0{active + 1}
           </span>
 
           <div className="relative mx-auto w-full max-w-[110rem]">
-            <SectionLabel>Beautiful isn&rsquo;t the goal</SectionLabel>
+            <div className="flex items-baseline justify-between gap-6">
+              <SectionLabel>Manifesto</SectionLabel>
+              <span className="annotation text-dust/60">{current.note}</span>
+            </div>
 
-            <div className="relative mt-10 h-[42vh] md:h-[46vh]">
+            <div className="relative mt-10 h-[46vh] md:h-[52vh]">
               {STATEMENTS.map((s, i) => (
                 <div
-                  key={s.word}
+                  key={s.lines.join()}
                   aria-hidden={i !== active}
                   className={cn(
                     "absolute inset-0 flex flex-col justify-center transition-all duration-[900ms] [transition-timing-function:var(--ease-ink)]",
@@ -78,10 +80,32 @@ export function Manifesto() {
                         : "translate-y-10 opacity-0 blur-[3px]",
                   )}
                 >
-                  <p className="font-display text-[clamp(2.6rem,10vw,9rem)] leading-[0.9] tracking-[-0.02em] text-ivory">
-                    <span className={cn("italic", s.accent)}>{s.word}</span>
-                    <br />
-                    {s.tail}
+                  <p className="font-display text-[clamp(2rem,7.6vw,7rem)] leading-[0.92] tracking-[-0.02em] text-ivory">
+                    {s.lines.map((line, li) => (
+                      <span
+                        key={line}
+                        className="relative block"
+                        style={{ paddingLeft: `${li * 3}vw` }}
+                      >
+                        <span className={cn(li === s.mark && "relative inline-block")}>
+                          {line}
+                          {li === s.mark && i === active && (
+                            <InkStroke
+                              key={`${i}-mark`}
+                              kind={s.kind ?? "underline"}
+                              width={s.kind === "circle" ? 3 : 4}
+                              delay={420}
+                              className={cn(
+                                "absolute left-[-3%] w-[106%]",
+                                s.kind === "circle"
+                                  ? "top-[-14%] h-[128%]"
+                                  : "bottom-[-0.18em] h-[0.3em]",
+                              )}
+                            />
+                          )}
+                        </span>
+                      </span>
+                    ))}
                   </p>
                 </div>
               ))}
@@ -90,20 +114,19 @@ export function Manifesto() {
             <div className="flex gap-2" aria-hidden>
               {STATEMENTS.map((s, i) => (
                 <span
-                  key={s.word}
+                  key={s.note}
                   className={cn(
-                    "h-px flex-1 origin-left bg-border transition-all duration-700",
-                    i <= active && s.bar,
+                    "h-px flex-1 origin-left transition-all duration-700",
+                    i <= active ? "bg-signal" : "bg-border",
                   )}
                 />
               ))}
             </div>
 
-            <p className="mt-8 max-w-2xl text-sm leading-relaxed text-muted-foreground md:text-base">
-              Every Sunday &amp; Ink project is structured around the visitor journey and the single
-              action your business actually needs next — an inquiry, a call, a booking, a purchase,
-              a reservation, an application. Design decisions follow that path, not the other way
-              around.
+            <p className="mt-8 max-w-xl text-sm leading-relaxed text-dust md:text-base">
+              Good design gets admired. Great design gets remembered — and remembered businesses get
+              chosen. Every decision here is made around the one action your business actually needs
+              next.
             </p>
           </div>
         </div>
