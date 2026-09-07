@@ -186,8 +186,8 @@
   }
 
   ::selection {
-    background: oklch(0.42 0.14 26 / 85%);
-    color: var(--ivory);
+    background: var(--signal);
+    color: var(--ink);
   }
 
   html {
