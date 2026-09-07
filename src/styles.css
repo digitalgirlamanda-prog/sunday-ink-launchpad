@@ -216,6 +216,8 @@
   --color-oxblood-deep: var(--oxblood-deep);
   --color-oxblood-bright: var(--oxblood-bright);
   --color-moss: var(--moss);
+  --color-signal: var(--signal);
+  --color-dust: var(--dust);
   --font-display: var(--font-display);
   --font-sans: var(--font-sans);
 }
