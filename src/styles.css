@@ -61,26 +61,29 @@
 :root {
   --radius: 0.625rem;
 
-  /* Anchors */
-  --ink: oklch(0.14 0.01 60);
-  --ink-deep: oklch(0.1 0.009 60);
-  --ink-raised: oklch(0.19 0.012 65);
+  /* Anchors — Ink #090909 */
+  --ink: oklch(0.145 0 0);
+  --ink-deep: oklch(0.105 0 0);
+  --ink-raised: oklch(0.205 0 0);
 
-  /* Paper chapters */
-  --paper: oklch(0.945 0.018 88);
-  --paper-shade: oklch(0.9 0.024 84);
-  --ink-soft: oklch(0.34 0.014 60);
-  --paper-line: oklch(0.2 0.012 60 / 16%);
+  /* Paper chapters — Paper #F2EEE5 */
+  --paper: oklch(0.945 0.011 85);
+  --paper-shade: oklch(0.9 0.012 85);
+  --ink-soft: oklch(0.36 0.004 80);
+  --paper-line: oklch(0.145 0 0 / 18%);
 
-  /* Voice colors */
-  --ivory: oklch(0.955 0.014 85);
-  --gold: oklch(0.79 0.108 84);
-  --gold-bright: oklch(0.9 0.085 92);
-  --gold-deep: oklch(0.62 0.098 72);
-  --oxblood: oklch(0.42 0.14 26);
-  --oxblood-deep: oklch(0.29 0.1 24);
-  --oxblood-bright: oklch(0.55 0.17 27);
-  --moss: oklch(0.47 0.07 135);
+  /* Voice colors — Signal #D9F20A, Dust #B8B6AF */
+  --ivory: oklch(0.965 0.008 85);
+  --signal: oklch(0.913 0.208 116);
+  --dust: oklch(0.757 0.006 95);
+  /* Legacy accent names now map to the Signal/Dust system */
+  --gold: var(--signal);
+  --gold-bright: oklch(0.955 0.19 116);
+  --gold-deep: oklch(0.78 0.175 116);
+  --oxblood: oklch(0.24 0 0);
+  --oxblood-deep: oklch(0.16 0 0);
+  --oxblood-bright: oklch(0.42 0.06 116);
+  --moss: var(--dust);
 
   --background: var(--ink);
   --foreground: var(--ivory);
@@ -88,36 +91,36 @@
   --card-foreground: var(--ivory);
   --popover: var(--ink-raised);
   --popover-foreground: var(--ivory);
-  --primary: var(--gold);
-  --primary-foreground: oklch(0.14 0.01 60);
-  --secondary: oklch(0.22 0.012 68);
+  --primary: var(--signal);
+  --primary-foreground: oklch(0.145 0 0);
+  --secondary: oklch(0.22 0 0);
   --secondary-foreground: var(--ivory);
-  --muted: oklch(0.22 0.012 68);
-  --muted-foreground: oklch(0.72 0.014 82);
-  --accent: oklch(0.24 0.02 78);
-  --accent-foreground: var(--gold-bright);
+  --muted: oklch(0.22 0 0);
+  --muted-foreground: var(--dust);
+  --accent: oklch(0.24 0.02 116);
+  --accent-foreground: var(--signal);
   --destructive: oklch(0.62 0.2 27);
   --destructive-foreground: var(--ivory);
-  --border: oklch(0.98 0.02 85 / 14%);
-  --input: oklch(0.98 0.02 85 / 18%);
-  --ring: var(--gold);
+  --border: oklch(0.96 0.005 85 / 15%);
+  --input: oklch(0.96 0.005 85 / 18%);
+  --ring: var(--signal);
 
   --font-display: "Bodoni Moda", "Didot", Georgia, serif;
   --font-sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
 
   --gradient-gold: linear-gradient(
     100deg,
-    oklch(0.62 0.098 72),
-    oklch(0.9 0.085 92) 22%,
-    oklch(0.72 0.1 78) 46%,
-    oklch(0.95 0.06 95) 66%,
-    oklch(0.66 0.1 74)
+    oklch(0.78 0.175 116),
+    oklch(0.955 0.19 116) 28%,
+    oklch(0.88 0.2 116) 58%,
+    oklch(0.965 0.17 118) 78%,
+    oklch(0.8 0.18 116)
   );
-  --gradient-ink: linear-gradient(180deg, oklch(0.1 0.009 60), oklch(0.15 0.01 64));
-  --gradient-oxblood: linear-gradient(160deg, oklch(0.33 0.115 25), oklch(0.24 0.085 22));
+  --gradient-ink: linear-gradient(180deg, oklch(0.105 0 0), oklch(0.16 0 0));
+  --gradient-oxblood: linear-gradient(160deg, oklch(0.145 0 0), oklch(0.1 0 0));
   --shadow-lift: 0 40px 90px -40px oklch(0 0 0 / 85%);
-  --shadow-paper: 0 30px 80px -30px oklch(0.2 0.04 40 / 35%);
-  --shadow-gold: 0 24px 70px -30px oklch(0.79 0.108 84 / 45%);
+  --shadow-paper: 0 30px 80px -30px oklch(0.145 0 0 / 35%);
+  --shadow-gold: 0 24px 70px -30px oklch(0.913 0.208 116 / 35%);
   --ease-ink: cubic-bezier(0.16, 0.84, 0.28, 1);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
