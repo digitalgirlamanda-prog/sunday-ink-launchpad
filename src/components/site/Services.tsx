@@ -97,7 +97,7 @@ export function Services() {
         </Reveal>
         <Reveal delay={80}>
           <h2 className="mt-6 max-w-4xl font-display text-[clamp(2.1rem,6.4vw,5.4rem)] leading-[0.92]">
-            THREE WAYS WE MAKE YOU <span className="italic text-oxblood">unmistakable.</span>
+            FIVE WAYS WE MAKE YOU <span className="italic text-oxblood">unmistakable.</span>
           </h2>
         </Reveal>
 
