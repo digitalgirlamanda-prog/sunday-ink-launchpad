@@ -57,6 +57,8 @@ function Index() {
   return (
     <>
       <Preloader />
+      <InkFilters />
+      <Cursor />
       <ScrollProgress />
       <Nav />
       <main>
@@ -71,6 +73,7 @@ function Index() {
         <Craft />
         <Pricing />
         <Contact />
+        <FinalCTA />
       </main>
       <Footer />
     </>
