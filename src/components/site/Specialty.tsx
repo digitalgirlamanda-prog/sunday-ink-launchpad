@@ -29,7 +29,10 @@ export function Specialty() {
           <Reveal delay={80}>
             <h2 className="mt-6 font-display text-[clamp(2.2rem,6.2vw,5.2rem)] leading-[0.92]">
               A LISTING IS A ROOM.{" "}
-              <span className="italic text-gold-bright">A brand is a place people return to.</span>
+              <span className="italic text-ivory">
+                A brand is a place people{" "}
+                <span className="signal-underline">return to.</span>
+              </span>
             </h2>
           </Reveal>
           <Reveal delay={140}>

@@ -127,26 +127,37 @@ export function Hero() {
         <h1 className="font-display leading-[0.82] tracking-[-0.025em] text-ivory">
           <span className="block overflow-hidden">
             <span
-              className="relative inline-block text-[clamp(3rem,12.5vw,12rem)]"
+              className="block text-[clamp(2.9rem,11vw,10.5rem)]"
               style={{
                 animation: "hero-line 1.1s var(--ease-ink) 0.25s both",
                 ...(reduced ? {} : layer(10)),
               }}
             >
-              FORGET PRETTY.
+              FORGET
+            </span>
+          </span>
+          <span className="block overflow-hidden">
+            <span
+              className="relative inline-block text-[clamp(2.9rem,11vw,10.5rem)]"
+              style={{
+                animation: "hero-line 1.1s var(--ease-ink) 0.32s both",
+                ...(reduced ? {} : layer(16)),
+              }}
+            >
+              PRETTY.
               <InkStroke
                 kind="strike"
                 delay={900}
                 width={5}
-                className="absolute left-[-2%] top-[46%] h-[0.3em] w-[104%]"
+                className="absolute left-[-3%] top-[38%] h-[0.26em] w-[106%]"
               />
             </span>
           </span>
-          <span className="block overflow-hidden pl-[6vw] md:pl-[14vw]">
+          <span className="block overflow-hidden pl-[6vw] md:pl-[16vw]">
             <span
-              className="block text-[clamp(3rem,12.5vw,12rem)] italic"
+              className="block text-[clamp(2.9rem,11vw,10.5rem)] italic"
               style={{
-                animation: "hero-line 1.1s var(--ease-ink) 0.38s both",
+                animation: "hero-line 1.1s var(--ease-ink) 0.42s both",
                 ...(reduced ? {} : layer(-16)),
               }}
             >
@@ -155,9 +166,9 @@ export function Hero() {
           </span>
           <span className="block overflow-hidden">
             <span
-              className="block text-[clamp(2.6rem,11.6vw,11.4rem)]"
+              className="block text-[clamp(1.9rem,8.2vw,8rem)]"
               style={{
-                animation: "hero-line 1.1s var(--ease-ink) 0.5s both",
+                animation: "hero-line 1.1s var(--ease-ink) 0.52s both",
                 ...(reduced ? {} : layer(22)),
               }}
             >

@@ -433,6 +433,14 @@
   }
 }
 
+/* Hand-ish signal underline under a selected word */
+@utility signal-underline {
+  background-image: linear-gradient(var(--signal), var(--signal));
+  background-repeat: no-repeat;
+  background-size: 100% 0.06em;
+  background-position: 0 0.92em;
+}
+
 /* Thin editorial rule that draws itself */
 @utility signal-rule {
   height: 1px;

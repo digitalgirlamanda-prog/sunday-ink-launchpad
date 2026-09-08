@@ -6,43 +6,71 @@ const SERVICES = [
   {
     id: "web",
     index: "01",
-    title: "WEB DESIGN",
-    accent: "websites",
-    line: "Custom websites built around the action your business needs.",
-    body: "Structure, hierarchy, and copy flow designed around one visitor journey. Mobile-first, fast, and built so the next step is always obvious.",
+    title: "WEB",
+    accent: "a custom site",
+    line: "Sites people remember.",
+    body: "Custom built around your customers, your work and the one action your business needs next. No template skins, no borrowed layouts.",
     points: [
-      "Custom design — no template skins",
-      "Conversion-focused page structure",
-      "Booking, payment and lead integrations",
-      "SEO foundations and analytics setup",
+      "Custom desktop and mobile design",
+      "Conversion-aware page structure",
+      "Booking, payment and inquiry flows",
+      "SEO foundations and analytics",
+    ],
+  },
+  {
+    id: "redesign",
+    index: "02",
+    title: "REDESIGN",
+    accent: "a redesign",
+    line: "For sites that stopped working.",
+    body: "We keep what earns its place, cut what doesn't, and rebuild the experience around the way people actually move through your business.",
+    points: [
+      "Structure and content audit",
+      "Rebuilt journey and hierarchy",
+      "Speed and mobile repair",
+      "Migration with no lost traffic",
+    ],
+  },
+  {
+    id: "landing",
+    index: "03",
+    title: "LANDING",
+    accent: "a landing page",
+    line: "One page. One decision.",
+    body: "Conversion-focused pages for a launch, an offer or a campaign — written and designed so the next step is obvious in seconds.",
+    points: [
+      "Single-goal page architecture",
+      "Offer and proof sequencing",
+      "Fast turnaround",
+      "Built to measure",
     ],
   },
   {
     id: "brand",
-    index: "02",
-    title: "BRAND IDENTITY",
-    accent: "identity",
-    line: "Visual systems people remember after they close the tab.",
-    body: "Logo, type, palette, and the rules that keep everything consistent — from your site to your signage, listings, and social presence.",
+    index: "04",
+    title: "BRAND",
+    accent: "brand direction",
+    line: "Make the business feel like something.",
+    body: "Logo, type, palette and the rules that hold it together — from your site to your signage, listings and everything people screenshot.",
     points: [
       "Logo and mark development",
-      "Type, color, and layout system",
-      "Brand guidelines your team can use",
-      "Collateral and launch assets",
+      "Type, colour and layout system",
+      "Guidelines your team can use",
+      "Launch collateral",
     ],
   },
   {
-    id: "growth",
-    index: "03",
-    title: "DIGITAL GROWTH",
-    accent: "growth",
-    line: "The work that continues after launch day.",
-    body: "SEO foundations, social assets and management, ongoing optimization and support — so your presence keeps improving instead of aging out.",
+    id: "content",
+    index: "05",
+    title: "CONTENT",
+    accent: "content support",
+    line: "Give people a reason to stop scrolling.",
+    body: "Social assets, ongoing support and the small consistent work that keeps a presence alive after launch day.",
     points: [
-      "On-page SEO and content structure",
-      "Social assets and management",
-      "Analytics, tracking and iteration",
-      "Care plans and ongoing support",
+      "Social templates and assets",
+      "Ongoing posting support",
+      "Photography direction",
+      "Care plans",
     ],
   },
 ];
@@ -69,7 +97,7 @@ export function Services() {
         </Reveal>
         <Reveal delay={80}>
           <h2 className="mt-6 max-w-4xl font-display text-[clamp(2.1rem,6.4vw,5.4rem)] leading-[0.92]">
-            THREE WAYS WE MAKE YOU <span className="italic text-oxblood">unmistakable.</span>
+            FIVE WAYS WE MAKE YOU <span className="italic text-oxblood">unmistakable.</span>
           </h2>
         </Reveal>
 

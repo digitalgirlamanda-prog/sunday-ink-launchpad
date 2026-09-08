@@ -180,6 +180,7 @@ export function Work() {
             target="_blank"
             rel="noreferrer"
             aria-label="Open the Knoll House website in a new tab"
+            data-cursor="Open"
             className="group block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-gold"
           >
             <TiltPlane>
@@ -220,6 +221,7 @@ export function Work() {
               target="_blank"
               rel="noreferrer"
               aria-label="Open the Tiki Waikiki website in a new tab"
+              data-cursor="Open"
               className="group relative mx-auto block w-full max-w-[34rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-gold"
             >
               {/* desktop fragment behind */}
@@ -305,6 +307,7 @@ export function Work() {
               target="_blank"
               rel="noreferrer"
               aria-label="Open the Noah's House website in a new tab"
+              data-cursor="Open"
               className="group relative mx-auto block w-full max-w-[40rem] pb-10 pr-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-oxblood md:pb-14"
             >
               <div
