@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Preloader } from "@/components/site/Preloader";
 import { Nav, ScrollProgress } from "@/components/site/Chrome";
+import { Cursor } from "@/components/site/Cursor";
+import { InkFilters } from "@/components/site/InkStroke";
 import { Hero } from "@/components/site/Hero";
 import { Manifesto } from "@/components/site/Manifesto";
 import { Shift } from "@/components/site/Shift";
@@ -12,6 +14,7 @@ import { Industries } from "@/components/site/Industries";
 import { Craft } from "@/components/site/Craft";
 import { Pricing } from "@/components/site/Pricing";
 import { Contact } from "@/components/site/Contact";
+import { FinalCTA } from "@/components/site/FinalCTA";
 import { Footer } from "@/components/site/Footer";
 import duskImg from "@/assets/specialty-dusk.jpg";
 
