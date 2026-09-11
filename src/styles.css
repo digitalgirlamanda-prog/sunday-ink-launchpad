@@ -110,17 +110,17 @@
 
   --gradient-gold: linear-gradient(
     100deg,
-    oklch(0.78 0.175 116),
-    oklch(0.955 0.19 116) 28%,
-    oklch(0.88 0.2 116) 58%,
-    oklch(0.965 0.17 118) 78%,
-    oklch(0.8 0.18 116)
+    #adc207,
+    #e8ff45 28%,
+    #d9f20a 58%,
+    #eeff6b 78%,
+    #b9cf08
   );
-  --gradient-ink: linear-gradient(180deg, oklch(0.105 0 0), oklch(0.16 0 0));
-  --gradient-oxblood: linear-gradient(160deg, oklch(0.145 0 0), oklch(0.1 0 0));
-  --shadow-lift: 0 40px 90px -40px oklch(0 0 0 / 85%);
-  --shadow-paper: 0 30px 80px -30px oklch(0.145 0 0 / 35%);
-  --shadow-gold: 0 24px 70px -30px oklch(0.913 0.208 116 / 35%);
+  --gradient-ink: linear-gradient(180deg, #040404, #131313);
+  --gradient-oxblood: linear-gradient(160deg, #0f0f0f, #060606);
+  --shadow-lift: 0 40px 90px -40px rgb(0 0 0 / 85%);
+  --shadow-paper: 0 30px 80px -30px rgb(9 9 9 / 30%);
+  --shadow-gold: 0 24px 70px -30px rgb(217 242 10 / 30%);
   --ease-ink: cubic-bezier(0.16, 0.84, 0.28, 1);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
