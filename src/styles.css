@@ -61,28 +61,28 @@
 :root {
   --radius: 0.625rem;
 
-  /* Anchors — Ink #090909 */
-  --ink: oklch(0.145 0 0);
-  --ink-deep: oklch(0.105 0 0);
-  --ink-raised: oklch(0.205 0 0);
+  /* Anchors — exact brand values */
+  --ink: #090909;
+  --ink-deep: #040404;
+  --ink-raised: #161616;
 
-  /* Paper chapters — Paper #F2EEE5 */
-  --paper: oklch(0.945 0.011 85);
-  --paper-shade: oklch(0.9 0.012 85);
-  --ink-soft: oklch(0.36 0.004 80);
-  --paper-line: oklch(0.145 0 0 / 18%);
+  /* Paper chapters — Paper #F2EEE5, kept neutral (never tan) */
+  --paper: #f2eee5;
+  --paper-shade: #e3ded2;
+  --ink-soft: #4b4b49;
+  --paper-line: rgb(9 9 9 / 16%);
 
   /* Voice colors — Signal #D9F20A, Dust #B8B6AF */
-  --ivory: oklch(0.965 0.008 85);
-  --signal: oklch(0.913 0.208 116);
-  --dust: oklch(0.757 0.006 95);
+  --ivory: #f7f4ee;
+  --signal: #d9f20a;
+  --dust: #b8b6af;
   /* Legacy accent names now map to the Signal/Dust system */
   --gold: var(--signal);
-  --gold-bright: oklch(0.955 0.19 116);
-  --gold-deep: oklch(0.78 0.175 116);
-  --oxblood: oklch(0.24 0 0);
-  --oxblood-deep: oklch(0.16 0 0);
-  --oxblood-bright: oklch(0.42 0.06 116);
+  --gold-bright: #e8ff45;
+  --gold-deep: #adc207;
+  --oxblood: #1f1f1e;
+  --oxblood-deep: #101010;
+  --oxblood-bright: #6d7448;
   --moss: var(--dust);
 
   --background: var(--ink);
@@ -92,17 +92,17 @@
   --popover: var(--ink-raised);
   --popover-foreground: var(--ivory);
   --primary: var(--signal);
-  --primary-foreground: oklch(0.145 0 0);
-  --secondary: oklch(0.22 0 0);
+  --primary-foreground: #090909;
+  --secondary: #1c1c1c;
   --secondary-foreground: var(--ivory);
-  --muted: oklch(0.22 0 0);
+  --muted: #1c1c1c;
   --muted-foreground: var(--dust);
-  --accent: oklch(0.24 0.02 116);
+  --accent: #1e2010;
   --accent-foreground: var(--signal);
   --destructive: oklch(0.62 0.2 27);
   --destructive-foreground: var(--ivory);
-  --border: oklch(0.96 0.005 85 / 15%);
-  --input: oklch(0.96 0.005 85 / 18%);
+  --border: rgb(242 238 229 / 16%);
+  --input: rgb(242 238 229 / 20%);
   --ring: var(--signal);
 
   --font-display: "Bodoni Moda", "Didot", Georgia, serif;
@@ -110,17 +110,17 @@
 
   --gradient-gold: linear-gradient(
     100deg,
-    oklch(0.78 0.175 116),
-    oklch(0.955 0.19 116) 28%,
-    oklch(0.88 0.2 116) 58%,
-    oklch(0.965 0.17 118) 78%,
-    oklch(0.8 0.18 116)
+    #adc207,
+    #e8ff45 28%,
+    #d9f20a 58%,
+    #eeff6b 78%,
+    #b9cf08
   );
-  --gradient-ink: linear-gradient(180deg, oklch(0.105 0 0), oklch(0.16 0 0));
-  --gradient-oxblood: linear-gradient(160deg, oklch(0.145 0 0), oklch(0.1 0 0));
-  --shadow-lift: 0 40px 90px -40px oklch(0 0 0 / 85%);
-  --shadow-paper: 0 30px 80px -30px oklch(0.145 0 0 / 35%);
-  --shadow-gold: 0 24px 70px -30px oklch(0.913 0.208 116 / 35%);
+  --gradient-ink: linear-gradient(180deg, #040404, #131313);
+  --gradient-oxblood: linear-gradient(160deg, #0f0f0f, #060606);
+  --shadow-lift: 0 40px 90px -40px rgb(0 0 0 / 85%);
+  --shadow-paper: 0 30px 80px -30px rgb(9 9 9 / 30%);
+  --shadow-gold: 0 24px 70px -30px rgb(217 242 10 / 30%);
   --ease-ink: cubic-bezier(0.16, 0.84, 0.28, 1);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
@@ -181,8 +181,37 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+  }
+
+  /* Role 1 + 2 — editorial display serif, with body to it (never hairline) */
+  .font-display {
+    font-weight: 500;
+    font-optical-sizing: auto;
+    font-synthesis-weight: none;
+  }
+  .font-display.italic,
+  .font-display em,
+  .font-display i {
+    font-weight: 500;
+  }
+
+  /* Role 3 — sans for everything informational; roomier on phones */
+  @media (max-width: 640px) {
+    body {
+      line-height: 1.75;
+      letter-spacing: 0.005em;
+    }
+    .font-display {
+      font-weight: 600;
+    }
+    p:not(.font-display) {
+      line-height: 1.7;
+    }
   }
 
   ::selection {

@@ -74,6 +74,13 @@ const ADDONS = [
   ["Growth", "From $497/mo"],
 ];
 
+const PROCESS = [
+  ["01", "Choose your starting point", "Pick the package that fits the business you actually run — not the one you might run one day."],
+  ["02", "We build the direction", "Type, imagery, voice and structure. You see a real page, not a moodboard."],
+  ["03", "Refine the details", "Your revision rounds, used properly. We sweat the small type."],
+  ["04", "Launch something unmistakable", "Domain, tracking, handover. Then it goes to work for you."],
+];
+
 export function Pricing() {
   return (
     <section id="pricing" className="relative bg-ink px-5 py-24 md:px-10 md:py-36">
@@ -82,55 +89,54 @@ export function Pricing() {
           <SectionLabel>Starting points</SectionLabel>
         </Reveal>
         <Reveal delay={80}>
-          <h2 className="mt-6 max-w-4xl font-display text-[clamp(2.1rem,6.4vw,5.4rem)] leading-[0.92] text-ivory">
+          <h2 className="mt-6 max-w-4xl font-display text-[clamp(2.1rem,6.4vw,5.4rem)] leading-[0.95] text-ivory">
             CLEAR NUMBERS. <span className="italic text-gold-foil">No mystery invoices.</span>
           </h2>
         </Reveal>
 
         {/* Rate card — editorial bands, not a comparison table */}
-        <div className="mt-14 border-t border-border">
+        <div className="mt-14 border-t border-border md:mt-20">
           {TIERS.map((t, i) => (
             <Reveal key={t.name} delay={i * 80}>
               <article
                 className={cn(
-                  "relative grid gap-x-10 gap-y-6 border-b border-border py-10 md:py-14 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.6fr)_auto] lg:items-start",
-                  t.badge && "bg-ink-raised/50 lg:px-8 lg:-mx-8",
+                  "relative grid gap-x-12 gap-y-8 border-b border-border py-12 md:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.7fr)_auto] lg:items-start",
+                  t.badge && "bg-ink-raised/40 lg:-mx-8 lg:px-8",
                 )}
               >
                 <div>
                   <div className="flex flex-wrap items-center gap-4">
-                    <h3 className="font-display text-[clamp(2rem,4.6vw,3.6rem)] leading-none text-ivory">
+                    <h3 className="font-display text-[clamp(2.1rem,4.6vw,3.6rem)] leading-none text-ivory">
                       {t.name}
                     </h3>
                     {t.badge && <span className="stamp text-gold">{t.badge}</span>}
                   </div>
-                  <p className="mt-4 font-display text-[clamp(1.9rem,4vw,3.2rem)] leading-none text-gold-foil">
+                  <p className="mt-6 font-display text-[clamp(2rem,4vw,3.2rem)] leading-none text-gold-foil">
                     {t.price}
                   </p>
-                  <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
+                  <p className="mt-6 max-w-xs text-[0.95rem] leading-relaxed text-muted-foreground">
                     {t.lead}
                   </p>
                 </div>
 
                 <div>
-                  <p className="max-w-2xl text-sm leading-loose text-muted-foreground">
-                    {t.features.map((f, fi) => (
-                      <span key={f}>
-                        <span className="text-ivory/85">{f}</span>
-                        {fi < t.features.length - 1 && (
-                          <span aria-hidden className="mx-2 text-oxblood-bright">
-                            ·
-                          </span>
-                        )}
-                      </span>
+                  <ul className="grid gap-x-10 gap-y-0 sm:grid-cols-2">
+                    {t.features.map((f) => (
+                      <li
+                        key={f}
+                        className="flex items-baseline gap-3 border-b border-border/50 py-3 text-[0.9rem] leading-relaxed text-ivory/85"
+                      >
+                        <span aria-hidden className="h-px w-3 shrink-0 translate-y-[-0.3em] bg-gold/70" />
+                        <span>{f}</span>
+                      </li>
                     ))}
-                  </p>
-                  <p className="mt-5 text-[0.62rem] uppercase leading-relaxed tracking-[0.2em] text-muted-foreground/60">
+                  </ul>
+                  <p className="mt-6 text-[0.62rem] uppercase leading-relaxed tracking-[0.2em] text-muted-foreground/70">
                     {t.turnaround}
                   </p>
                 </div>
 
-                <div className="lg:pt-2">
+                <div className="lg:pt-3">
                   <MagneticLink href="#start" variant={t.badge ? "gold" : "ghost"}>
                     Choose {t.name.toLowerCase()}
                   </MagneticLink>
@@ -140,14 +146,14 @@ export function Pricing() {
           ))}
         </div>
 
-        <div className="mt-16 grid gap-14 lg:grid-cols-[1.3fr_1fr] lg:gap-20">
+        <div className="mt-20 grid gap-16 lg:grid-cols-[1.15fr_1fr] lg:gap-24">
           <div>
             <SectionLabel>Branding &amp; ongoing</SectionLabel>
             <ul className="mt-8 columns-1 gap-12 md:columns-2">
               {ADDONS.map(([name, price]) => (
                 <li
                   key={name}
-                  className="group mb-5 flex items-baseline gap-3 break-inside-avoid"
+                  className="group mb-6 flex items-baseline gap-3 break-inside-avoid"
                 >
                   <span className="font-display text-lg leading-snug text-ivory transition-colors duration-500 group-hover:text-gold md:text-xl">
                     {name}
@@ -161,24 +167,31 @@ export function Pricing() {
             </ul>
           </div>
 
-          {/* Terms as a paper note */}
+          {/* How it works — the experience, as a paper note */}
           <Reveal delay={120}>
             <aside
               className="paper-grain relative rotate-[-0.8deg] bg-paper p-7 text-ink md:p-10"
               style={{ boxShadow: "var(--shadow-paper)" }}
             >
               <SectionLabel tone="oxblood">How it works</SectionLabel>
-              <p className="mt-6 font-display text-2xl leading-snug">
-                50% deposit to begin. 50% before launch.
+              <ol className="mt-8 space-y-7">
+                {PROCESS.map(([n, title, body]) => (
+                  <li key={n} className="grid grid-cols-[2.2rem_1fr] gap-x-4">
+                    <span className="pt-1 text-[0.62rem] tracking-[0.28em] text-ink-soft/70">
+                      {n}
+                    </span>
+                    <div>
+                      <h4 className="font-display text-xl leading-tight md:text-2xl">{title}</h4>
+                      <p className="mt-2 text-[0.88rem] leading-relaxed text-ink-soft">{body}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+              <p className="mt-9 border-t border-paper-line pt-5 text-[0.75rem] leading-relaxed text-ink-soft/80">
+                Third-party software, domain, hosting/subscriptions and premium integrations are
+                separate unless included in your proposal. Additional revisions outside your package
+                are billed separately.
               </p>
-              <ul className="mt-6 space-y-4 text-sm leading-relaxed text-ink-soft">
-                <li>Payment plans available where appropriate.</li>
-                <li>
-                  Third-party software, domain, hosting/subscriptions and premium integrations are
-                  separate unless included in your proposal.
-                </li>
-                <li>Additional revisions outside your package are billed separately.</li>
-              </ul>
               <span className="stamp absolute -right-2 -top-3 text-moss md:-right-4">
                 No surprises
               </span>
