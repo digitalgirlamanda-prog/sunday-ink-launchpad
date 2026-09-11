@@ -181,8 +181,37 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+  }
+
+  /* Role 1 + 2 — editorial display serif, with body to it (never hairline) */
+  .font-display {
+    font-weight: 500;
+    font-optical-sizing: auto;
+    font-synthesis-weight: none;
+  }
+  .font-display.italic,
+  .font-display em,
+  .font-display i {
+    font-weight: 500;
+  }
+
+  /* Role 3 — sans for everything informational; roomier on phones */
+  @media (max-width: 640px) {
+    body {
+      line-height: 1.75;
+      letter-spacing: 0.005em;
+    }
+    .font-display {
+      font-weight: 600;
+    }
+    p:not(.font-display) {
+      line-height: 1.7;
+    }
   }
 
   ::selection {
