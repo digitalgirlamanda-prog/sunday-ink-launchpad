@@ -245,33 +245,64 @@ export function Shift() {
               ))}
             </div>
 
-            {/* The page being transformed */}
-            <div
-              className="relative mt-4 h-[40svh] w-full overflow-hidden md:mt-6 md:h-[44svh]"
-              style={{
-                boxShadow: `0 ${18 + inBrand * 30}px ${50 + inBrand * 40}px -30px oklch(0.1 0.02 30 / ${0.35 + inBrand * 0.35})`,
-              }}
-            >
-              {/* background temperature: template gray → paper → ink */}
-              <div className="absolute inset-0 bg-[oklch(0.96_0_0)]" />
+            {/* The page being transformed — layered, with depth behind it */}
+            <div className="relative mt-4 md:mt-6">
+              {/* ghost frames drifting out of register as the brand arrives */}
               <div
-                className="absolute inset-0 bg-paper-shade"
-                style={{ opacity: inConsidered }}
+                aria-hidden
+                className="pointer-events-none absolute inset-0 border border-paper-line"
+                style={{
+                  transform: `translate3d(${-6 - inBrand * 16}px, ${-6 - inBrand * 12}px, 0) rotate(${-0.6 - inBrand * 0.8}deg)`,
+                  opacity: 0.5 + inBrand * 0.3,
+                }}
               />
-              <div className="surface-grain absolute inset-0 bg-ink" style={{ opacity: inBrand }} />
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  border: "1px solid var(--signal)",
+                  transform: `translate3d(${8 + inBrand * 20}px, ${8 + inBrand * 14}px, 0) rotate(${0.5 + inBrand * 0.7}deg)`,
+                  opacity: inBrand * 0.65,
+                }}
+              />
 
-              <GenericLayer o={1 - outGeneric} y={outGeneric * -18} />
-              <ConsideredLayer
-                o={inConsidered * (1 - outConsidered)}
-                y={(1 - inConsidered) * 22 + outConsidered * -18}
-                s={0.97 + inConsidered * 0.03}
-              />
-              <BrandLayer
-                o={inBrand}
-                y={(1 - inBrand) * 24}
-                s={0.97 + inBrand * 0.03}
-                img={sm(p, 0.66, 0.92)}
-              />
+              <div
+                className="relative h-[40svh] w-full overflow-hidden md:h-[44svh]"
+                style={{
+                  transform: `translate3d(0, ${(0.5 - p) * 26}px, 0) scale(${0.985 + inBrand * 0.02})`,
+                  boxShadow: `0 ${18 + inBrand * 34}px ${50 + inBrand * 48}px -30px rgb(9 9 9 / ${0.32 + inBrand * 0.38})`,
+                }}
+              >
+                {/* background temperature: template gray → paper → ink */}
+                <div className="absolute inset-0 bg-[oklch(0.96_0_0)]" />
+                <div className="absolute inset-0 bg-paper-shade" style={{ opacity: inConsidered }} />
+                <div
+                  className="surface-grain absolute inset-0 bg-ink"
+                  style={{ opacity: inBrand }}
+                />
+
+                <GenericLayer o={1 - outGeneric} y={outGeneric * -18} />
+                <ConsideredLayer
+                  o={inConsidered * (1 - outConsidered)}
+                  y={(1 - inConsidered) * 22 + outConsidered * -18}
+                  s={0.97 + inConsidered * 0.03}
+                />
+                <BrandLayer
+                  o={inBrand}
+                  y={(1 - inBrand) * 24}
+                  s={0.97 + inBrand * 0.03}
+                  img={sm(p, 0.66, 0.92)}
+                />
+              </div>
+
+              {/* Signal punch — small, cropped, out of the grid */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute -bottom-3 left-4 z-10 bg-signal px-2 py-1 text-[0.55rem] uppercase tracking-[0.26em] text-ink md:left-8"
+                style={{ opacity: inBrand, transform: `translateY(${(1 - inBrand) * 10}px)` }}
+              >
+                Unmistakable
+              </span>
             </div>
 
             {/* Scrub control */}
