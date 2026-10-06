@@ -1,6 +1,12 @@
-# Sunday & Ink — In-place redesign
+# Sunday & Ink — Cinematic studio experience
 
 ## Tasks
+- [x] Rebuild hero as a pinned multi-world opening sequence
+- [x] Turn portfolio into four full-viewport project universes
+- [ ] Intensify Invisible → Unmistakable into a fracture/takeover scene
+- [ ] Refine pricing into large editorial creative editions
+- [ ] Connect chapter transitions and reduce repetitive reveal motion
+- [ ] Cinematic mobile QA at 390px and desktop QA
 - [ ] Portfolio posters: capture real screenshots of 4 live projects, optimize to webp, use as instant posters (no iframe pop-in)
 - [ ] Palette evolution in styles.css: paper/ivory chapters, oxblood accent, moss notation, gold demoted to highlight; paper-grain + new utilities
 - [ ] Preloader: shorten to ≤700ms, never block
