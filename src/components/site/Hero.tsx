@@ -1,225 +1,110 @@
 import { useEffect, useRef, useState } from "react";
 import { MagneticLink, useReducedMotion } from "./primitives";
-import { InkStroke } from "./InkStroke";
-import duskImg from "@/assets/specialty-dusk.jpg";
+import knoll from "@/assets/work/knoll-desktop.webp";
+import tiki from "@/assets/work/tiki-mobile.webp";
+import harrys from "@/assets/work/harrys-desktop.webp";
+import noahs from "@/assets/work/noahs-mid.webp";
 
-/** 0→1 while the hero scrolls off the top of the viewport. */
-function useHeroScroll(reduced: boolean) {
-  const [p, setP] = useState(0);
-  useEffect(() => {
-    if (reduced) return;
-    let raf = 0;
-    const on = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() =>
-        setP(Math.min(1, Math.max(0, window.scrollY / (window.innerHeight * 0.9)))),
-      );
-    };
-    on();
-    window.addEventListener("scroll", on, { passive: true });
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", on);
-    };
-  }, [reduced]);
-  return p;
-}
-
-/** Normalised pointer position (-1 → 1) for independent layer drift. */
-function usePointerParallax(reduced: boolean) {
-  const [p, setP] = useState({ x: 0, y: 0 });
-  useEffect(() => {
-    if (reduced) return;
-    if (!window.matchMedia("(pointer: fine)").matches) return;
-    let raf = 0;
-    const on = (e: PointerEvent) => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() =>
-        setP({
-          x: (e.clientX / window.innerWidth) * 2 - 1,
-          y: (e.clientY / window.innerHeight) * 2 - 1,
-        }),
-      );
-    };
-    window.addEventListener("pointermove", on, { passive: true });
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("pointermove", on);
-    };
-  }, [reduced]);
-  return p;
-}
+const WORLDS = [
+  { src: knoll, name: "Knoll House", type: "Destination" },
+  { src: tiki, name: "Tiki Waikiki", type: "Hospitality" },
+  { src: harrys, name: "Harry’s Lake House", type: "Direct booking" },
+  { src: noahs, name: "Noah’s House", type: "Luxury stay" },
+];
 
 export function Hero() {
+  const scene = useRef<HTMLDivElement | null>(null);
   const reduced = useReducedMotion();
-  const hs = useHeroScroll(reduced);
-  const pp = usePointerParallax(reduced);
-  const ref = useRef<HTMLElement | null>(null);
+  const [act, setAct] = useState(0);
 
-  const layer = (depth: number) => ({
-    transform: `translate3d(${pp.x * depth}px, ${pp.y * depth * 0.6}px, 0)`,
-    transition: "transform 700ms var(--ease-ink)",
-  });
+  useEffect(() => {
+    const el = scene.current;
+    if (!el || reduced) return;
+    let raf = 0;
+    let lastAct = -1;
+    const update = () => {
+      raf = 0;
+      const rect = el.getBoundingClientRect();
+      const travel = Math.max(1, rect.height - window.innerHeight);
+      const p = Math.min(1, Math.max(0, -rect.top / travel));
+      el.style.setProperty("--hero-p", p.toFixed(4));
+      const nextAct = p < 0.18 ? 0 : p < 0.52 ? 1 : p < 0.84 ? 2 : 3;
+      if (nextAct !== lastAct) {
+        lastAct = nextAct;
+        setAct(nextAct);
+      }
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [reduced]);
 
   return (
-    <section
-      ref={ref}
-      id="top"
-      className="surface-grain relative flex min-h-[100svh] flex-col justify-between overflow-hidden bg-ink pb-8 pt-24 md:pb-12 md:pt-28"
-    >
-      <div aria-hidden className="absolute inset-0" style={{ background: "var(--gradient-ink)" }} />
-
-      {/* Cropped photographic fragment — a strip, not a background */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute right-0 top-[14vh] hidden h-[62vh] w-[26vw] overflow-hidden md:block"
-        style={{
-          ...layer(-14),
-          clipPath: "polygon(0 4%, 100% 0, 100% 96%, 0 100%)",
-          opacity: 0.55 - hs * 0.35,
-        }}
-      >
-        <img
-          src={duskImg}
-          alt=""
-          className="scan-edge h-full w-full object-cover"
-          style={{ transform: `translate3d(0, ${hs * -12}%, 0) scale(1.15)` }}
-        />
-      </div>
-
-      {/* Living ampersand — photography lives inside the letterform */}
-      <span
-        aria-hidden
-        className="pointer-events-none absolute right-[-14vw] top-[6vh] select-none font-display italic leading-none md:right-[6vw] md:top-[2vh]"
-        style={{
-          fontSize: "clamp(17rem, 44vw, 50rem)",
-          backgroundImage: `linear-gradient(oklch(0.145 0 0 / 30%), oklch(0.145 0 0 / 30%)), url(${duskImg})`,
-          backgroundSize: "cover",
-          backgroundPosition: `50% ${42 + hs * 22}%`,
-          WebkitBackgroundClip: "text",
-          backgroundClip: "text",
-          color: "transparent",
-          transform: `translate3d(${pp.x * 18}px, ${hs * 9}vh, 0)`,
-          opacity: 0.5,
-        }}
-      >
-        &amp;
-      </span>
-
-      {/* Editorial masthead line */}
-      <div className="relative z-10 mx-auto flex w-full max-w-[110rem] items-start justify-between px-5 md:px-10">
-        <p
-          className="text-[0.58rem] uppercase tracking-[0.46em] text-dust"
-          style={{ animation: "hero-line 0.9s var(--ease-ink) 0.15s both" }}
-        >
-          Vol. 01 — Studio issue
-        </p>
-        <p
-          className="max-w-[9rem] text-right text-[0.58rem] uppercase leading-relaxed tracking-[0.28em] text-dust md:max-w-none"
-          style={{ animation: "hero-line 0.9s var(--ease-ink) 0.22s both" }}
-        >
-          Remote studio <span className="text-signal">/</span> booked one project at a time
-        </p>
-      </div>
-
-      {/* The type dominates */}
-      <div className="relative z-10 mx-auto w-full max-w-[110rem] px-5 md:px-10">
-        <h1 className="font-display leading-[0.82] tracking-[-0.025em] text-ivory">
-          <span className="block overflow-hidden">
-            <span
-              className="block text-[clamp(2.9rem,11vw,10.5rem)]"
-              style={{
-                animation: "hero-line 1.1s var(--ease-ink) 0.25s both",
-                ...(reduced ? {} : layer(10)),
-              }}
-            >
-              FORGET
-            </span>
-          </span>
-          <span className="block overflow-hidden">
-            <span
-              className="relative inline-block text-[clamp(2.9rem,11vw,10.5rem)]"
-              style={{
-                animation: "hero-line 1.1s var(--ease-ink) 0.32s both",
-                ...(reduced ? {} : layer(16)),
-              }}
-            >
-              PRETTY.
-              <InkStroke
-                kind="strike"
-                delay={900}
-                width={5}
-                className="absolute left-[-3%] top-[38%] h-[0.26em] w-[106%]"
-              />
-            </span>
-          </span>
-          <span className="block overflow-hidden pl-[6vw] md:pl-[16vw]">
-            <span
-              className="block text-[clamp(2.9rem,11vw,10.5rem)] italic"
-              style={{
-                animation: "hero-line 1.1s var(--ease-ink) 0.42s both",
-                ...(reduced ? {} : layer(-16)),
-              }}
-            >
-              BE
-            </span>
-          </span>
-          <span className="block overflow-hidden">
-            <span
-              className="block text-[clamp(1.9rem,8.2vw,8rem)]"
-              style={{
-                animation: "hero-line 1.1s var(--ease-ink) 0.52s both",
-                ...(reduced ? {} : layer(22)),
-              }}
-            >
-              UNFORGETTABLE.
-            </span>
-          </span>
-        </h1>
-
-        {/* Annotation, set like a margin note */}
-        <p
-          className="annotation mt-6 max-w-xs -rotate-[1.2deg] pl-[2vw] md:mt-8 md:pl-[16vw]"
-          style={{ animation: "hero-line 1s var(--ease-ink) 0.62s both" }}
-        >
-          Websites for businesses with something worth noticing.
-        </p>
-      </div>
-
-      {/* Base line: offer + CTA + scroll tick */}
-      <div
-        className="relative z-10 mx-auto w-full max-w-[110rem] px-5 md:px-10"
-        style={{ opacity: reduced ? 1 : 1 - hs * 0.85 }}
-      >
-        <div className="grid gap-8 border-t border-border pt-6 md:grid-cols-[1fr_auto] md:items-end">
-          <div>
-            <p className="max-w-md text-sm leading-relaxed text-dust md:text-base">
-              Custom websites and brand direction for small businesses. Built around your customers,
-              your work and the one thing you need them to do next.
-            </p>
-            <p className="mt-5 text-[0.6rem] uppercase tracking-[0.34em] text-dust/80">
-              Custom build <span className="text-signal">•</span> Mobile-first{" "}
-              <span className="text-signal">•</span> Live in days, not months
-            </p>
+    <section id="top" className="relative bg-ink">
+      <div ref={scene} className="cinematic-hero relative h-[330svh] md:h-[390vh]">
+        <div className="surface-grain sticky top-0 h-[100svh] overflow-hidden bg-ink">
+          <div aria-hidden className="hero-worlds absolute inset-0">
+            {WORLDS.map((world, index) => (
+              <figure key={world.name} className={`hero-world hero-world-${index + 1}`}>
+                <img src={world.src} alt="" width={index === 1 ? 640 : 1400} height={index === 1 ? 1385 : 972} decoding="async" />
+                <figcaption>
+                  <span>0{index + 1}</span> {world.type} / {world.name}
+                </figcaption>
+              </figure>
+            ))}
           </div>
-          <div className="flex flex-col gap-4 sm:flex-row md:justify-end">
-            <MagneticLink href="#start">Make me unmissable</MagneticLink>
-            <MagneticLink href="#work" variant="ghost">
-              See what we build
-            </MagneticLink>
-          </div>
-        </div>
 
-        <div className="mt-8 flex items-center gap-4">
-          <span aria-hidden className="relative h-10 w-px overflow-hidden bg-border">
-            <span
-              className="absolute inset-x-0 h-4 bg-signal"
-              style={{ animation: reduced ? undefined : "scroll-tick 2.4s linear infinite" }}
-            />
+          <div aria-hidden className="hero-shutter absolute inset-0 bg-ink" />
+          <span aria-hidden className="hero-depth-word absolute whitespace-nowrap font-sans font-semibold uppercase text-outline-ivory">
+            WORLDS
           </span>
-          <span className="text-[0.55rem] uppercase tracking-[0.4em] text-dust/70">
-            Scroll — the work starts here
-          </span>
+
+          <div className="relative z-10 mx-auto flex h-full w-full max-w-[110rem] flex-col px-5 pb-7 pt-24 md:px-10 md:pb-10 md:pt-28">
+            <div className="hero-kicker flex items-center justify-between gap-6 text-[0.58rem] uppercase tracking-[0.34em] text-dust">
+              <span>Sunday &amp; Ink / Studio</span>
+              <span className="hidden text-right sm:block">One studio. Completely different worlds.</span>
+            </div>
+
+            <div className="hero-title-stage relative flex flex-1 items-center justify-center">
+              <h1 className="sr-only">Sunday &amp; Ink — websites impossible to ignore</h1>
+              <p className="hero-brand-lockup absolute text-center font-display text-[clamp(2.2rem,7vw,6.5rem)] leading-none text-ivory">
+                SUNDAY <span className="italic text-signal">&amp;</span> INK
+              </p>
+              <div className="hero-statement absolute inset-x-0 top-1/2 -translate-y-1/2">
+                <p className="hero-line-exist font-display text-[clamp(2.6rem,9.3vw,9rem)] leading-[0.84] text-ivory">
+                  WEBSITES SHOULDN’T
+                  <span className="block pl-[8vw] italic text-dust">JUST EXIST.</span>
+                </p>
+                <p className="hero-line-ignore mt-5 text-right font-display text-[clamp(2.5rem,9.3vw,9rem)] leading-[0.84] text-ivory">
+                  THEY SHOULD BE
+                  <span className="relative block text-signal">IMPOSSIBLE TO IGNORE.</span>
+                </p>
+              </div>
+            </div>
+
+            <div className="hero-footer grid items-end gap-5 border-t border-border pt-5 md:grid-cols-[1fr_auto]">
+              <div>
+                <p className="max-w-md text-sm leading-relaxed text-dust">
+                  Custom websites and brand direction for businesses with something worth noticing.
+                </p>
+                <p className="mt-2 text-[0.56rem] uppercase tracking-[0.28em] text-dust/60">
+                  Act 0{act + 1} / {act === 0 ? "The studio" : act === 1 ? "The premise" : act === 2 ? "The worlds" : "The invitation"}
+                </p>
+              </div>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <MagneticLink href="#work">Enter the work</MagneticLink>
+                <MagneticLink href="#start" variant="ghost">Make me unmissable</MagneticLink>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
