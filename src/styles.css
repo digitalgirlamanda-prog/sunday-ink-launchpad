@@ -99,6 +99,15 @@
   --world-noahs-fg: #17191c;
   --world-noahs-accent: #738da0;
 
+  /* Marlow & Co. — independent fictional bakery identity */
+  --bakery-flour: #fcfaf7;
+  --bakery-terracotta: #d97d54;
+  --bakery-rust: #a24e2e;
+  --bakery-charcoal: #2a2826;
+  --bakery-muted: #5c5752;
+  --bakery-line: #e5e0d8;
+  --bakery-wash: #f7f4f0;
+
   --background: var(--ink);
   --foreground: var(--ivory);
   --card: var(--ink-raised);
@@ -261,6 +270,15 @@
   --color-moss: var(--moss);
   --color-signal: var(--signal);
   --color-dust: var(--dust);
+  --color-bakery-flour: var(--bakery-flour);
+  --color-bakery-terracotta: var(--bakery-terracotta);
+  --color-bakery-rust: var(--bakery-rust);
+  --color-bakery-charcoal: var(--bakery-charcoal);
+  --color-bakery-muted: var(--bakery-muted);
+  --color-bakery-line: var(--bakery-line);
+  --color-bakery-wash: var(--bakery-wash);
+  --font-bakery: "Fraunces", Georgia, serif;
+  --font-bakery-sans: "Montserrat", Arial, sans-serif;
   --font-display: var(--font-display);
   --font-sans: var(--font-sans);
 }
@@ -272,6 +290,31 @@
   background-clip: text;
   color: transparent;
   animation: foil-shift 14s var(--ease-ink) infinite alternate;
+}
+
+.bakery-brand { display: flex; flex-direction: column; padding: 14px 18px; gap: 10px; background: var(--bakery-flour); color: var(--bakery-charcoal); font-family: "Montserrat", Arial, sans-serif; }
+.bakery-wordmark { font-family: "Fraunces", Georgia, serif; text-align: center; font-size: 18px; font-weight: 600; line-height: 1.2; }
+.bakery-photo { position: relative; overflow: hidden; flex: 0 0 25%; min-height: 64px; }
+.bakery-photo img { width: 100%; height: 100%; object-fit: cover; }
+.bakery-content { display: flex; flex: 1; flex-direction: column; min-height: 0; gap: 9px; }
+.bakery-headline { font-family: "Fraunces", Georgia, serif; font-size: 28px; line-height: .96; font-weight: 600; }
+.bakery-headline em { color: var(--bakery-terracotta); font-weight: 500; }
+.bakery-content .bakery-description { font-size: 10px; line-height: 1.55; color: var(--bakery-muted); max-width: 38ch; }
+.bakery-reserve { display: flex; align-items: center; justify-content: space-between; background: var(--bakery-charcoal); color: var(--bakery-flour); padding: 10px 12px; font-size: 9px; font-weight: 600; }
+.bakery-footer { display: flex; justify-content: space-between; gap: 10px; border-top: 1px solid var(--bakery-line); padding-top: 7px; color: var(--bakery-muted); font-size: 8px; line-height: 1.4; }
+.bakery-footer span:last-child { color: var(--bakery-rust); }
+@media (min-width: 768px) {
+  .bakery-brand { padding: 28px 34px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr; column-gap: 40px; row-gap: 22px; }
+  .bakery-wordmark { grid-column: 1 / -1; font-size: 26px; border-bottom: 1px solid var(--bakery-line); padding-bottom: 16px; }
+  .bakery-photo { grid-column: 2; grid-row: 2; min-height: 0; }
+  .bakery-content { grid-column: 1; grid-row: 2; justify-content: center; gap: 20px; }
+  .bakery-headline { font-size: 48px; }
+  .bakery-content .bakery-description { font-size: 13px; }
+  .bakery-reserve { font-size: 11px; padding: 15px 18px; }
+  .bakery-footer { font-size: 10px; padding-top: 12px; }
+}
+@media (max-width: 767px) {
+  .shift-stage { height: 100svh; min-height: 720px; top: min(0px, calc(100svh - 720px)); }
 }
 
 /* Grain for dark chapters */

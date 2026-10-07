@@ -33,6 +33,7 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Montserrat:wght@400;500;600&display=swap" },
       // Hero LCP: photography inside the ampersand letterform
       { rel: "preload", as: "image", href: duskImg },
     ],
