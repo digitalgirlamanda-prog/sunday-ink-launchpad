@@ -188,8 +188,18 @@ export function Shift() {
 
   return (
     <section id="shift" className="paper-grain relative bg-paper text-ink">
-      <div ref={ref} className="relative h-[300vh] md:h-[340vh]">
+      <div ref={ref} className="relative h-[350vh] md:h-[430vh]">
         <div className="sticky top-0 flex h-[100svh] flex-col justify-center overflow-hidden px-5 pb-4 pt-24 md:px-10 md:pt-28">
+          <span
+            aria-hidden
+            className="pointer-events-none absolute left-[-5vw] top-[9vh] whitespace-nowrap font-display text-[clamp(7rem,20vw,22rem)] italic leading-none text-outline-ink"
+            style={{
+              opacity: 0.08 + inBrand * 0.08,
+              transform: `translate3d(${(0.5 - p) * 34}vw, 0, 0)`,
+            }}
+          >
+            THE SHIFT
+          </span>
           {/* Oxblood flood breaking out of the grid as the brand arrives */}
           <div
             aria-hidden
@@ -246,7 +256,21 @@ export function Shift() {
             </div>
 
             {/* The page being transformed — layered, with depth behind it */}
-            <div className="relative mt-4 md:mt-6">
+            <div className="relative mt-4 [perspective:1800px] md:mt-6">
+              {/* The old grid physically breaks out of register as the brand takes over. */}
+              {[0, 1, 2, 3].map((panel) => (
+                <span
+                  key={panel}
+                  aria-hidden
+                  className="pointer-events-none absolute bottom-0 top-0 z-20 hidden border-x border-paper-line bg-paper/80 md:block"
+                  style={{
+                    left: `${panel * 25}%`,
+                    width: "25.2%",
+                    opacity: outConsidered * (1 - inBrand),
+                    transform: `translate3d(${(panel - 1.5) * outConsidered * 40}px, ${Math.abs(panel - 1.5) * outConsidered * 22}px, ${outConsidered * 90}px) rotateY(${(panel - 1.5) * outConsidered * 13}deg)`,
+                  }}
+                />
+              ))}
               {/* ghost frames drifting out of register as the brand arrives */}
               <div
                 aria-hidden
@@ -267,9 +291,10 @@ export function Shift() {
               />
 
               <div
-                className="relative h-[40svh] w-full overflow-hidden md:h-[44svh]"
+                className="relative h-[40svh] w-full overflow-hidden md:h-[48svh]"
                 style={{
-                  transform: `translate3d(0, ${(0.5 - p) * 26}px, 0) scale(${0.985 + inBrand * 0.02})`,
+                  clipPath: `inset(${(1 - inConsidered) * 3}% ${Math.max(0, (1 - inBrand) * 3)}% ${Math.max(0, (1 - inBrand) * 3)}% ${(1 - inConsidered) * 3}%)`,
+                  transform: `translate3d(0, ${(0.5 - p) * 26}px, ${inBrand * 90}px) scale(${0.94 + inBrand * 0.1}) rotateX(${(1 - inConsidered) * 3}deg)`,
                   boxShadow: `0 ${18 + inBrand * 34}px ${50 + inBrand * 48}px -30px rgb(9 9 9 / ${0.32 + inBrand * 0.38})`,
                 }}
               >
@@ -302,6 +327,17 @@ export function Shift() {
                 style={{ opacity: inBrand, transform: `translateY(${(1 - inBrand) * 10}px)` }}
               >
                 Unmistakable
+              </span>
+
+              <span
+                aria-hidden
+                className="pointer-events-none absolute left-1/2 top-1/2 z-30 whitespace-nowrap font-display text-[clamp(3.3rem,13vw,12rem)] italic leading-[0.72] text-ivory mix-blend-difference"
+                style={{
+                  opacity: sm(p, 0.82, 0.94),
+                  transform: `translate3d(calc(-50% + ${(1 - inBrand) * 35}vw), -50%, 0) scale(${0.72 + inBrand * 0.32})`,
+                }}
+              >
+                UNMISTAKABLE
               </span>
             </div>
 

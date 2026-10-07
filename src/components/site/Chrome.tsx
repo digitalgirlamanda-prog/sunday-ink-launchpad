@@ -64,7 +64,7 @@ export function Nav() {
       <div className="mx-auto flex max-w-[110rem] items-center justify-between px-5 py-4 md:px-10 md:py-6">
         <a href="#top" className="group flex items-baseline gap-2">
           <span className="font-display text-lg tracking-[0.16em] text-ivory md:text-xl">SUNDAY</span>
-          <span className="font-display text-2xl italic text-gold-foil md:text-3xl">&amp;</span>
+          <span className="font-display text-2xl italic text-dust md:text-3xl">&amp;</span>
           <span className="font-display text-lg tracking-[0.16em] text-ivory md:text-xl">INK</span>
         </a>
 
@@ -95,13 +95,13 @@ export function Nav() {
         >
           <span
             className={cn(
-              "h-px w-5 bg-gold transition-transform duration-500",
+              "h-px w-5 bg-dust transition-transform duration-500",
               open && "translate-y-[3.5px] rotate-45",
             )}
           />
           <span
             className={cn(
-              "h-px w-5 bg-gold transition-transform duration-500",
+              "h-px w-5 bg-dust transition-transform duration-500",
               open && "-translate-y-[3.5px] -rotate-45",
             )}
           />
