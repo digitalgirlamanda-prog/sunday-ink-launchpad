@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep fictional transformation brand styling scoped through independent semantic tokens and bakery-only font roles so sample identity changes never recolor the studio.

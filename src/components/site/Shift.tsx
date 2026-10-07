@@ -57,28 +57,28 @@ function ConsideredLayer({ o, y, s }: { o: number; y: number; s: number }) {
   return (
     <div
       aria-hidden={o < 0.5}
-      className="absolute inset-0 flex flex-col p-5 md:p-10"
+      className="absolute inset-0 flex flex-col bg-bakery-wash font-bakery-sans p-5 md:p-10"
       style={{
         opacity: o,
         transform: `translate3d(0, ${y}px, 0) scale(${s})`,
         pointerEvents: "none",
       }}
     >
-      <div className="flex items-center justify-between border-b border-paper-line pb-3">
-        <span className="font-display text-xs tracking-[0.26em] text-ink">MARLOW &amp; CO.</span>
-        <span className="hidden gap-4 text-[9px] uppercase tracking-[0.2em] text-ink-soft sm:flex">
+      <div className="flex items-center justify-between border-b border-bakery-line pb-3">
+        <span className="font-bakery text-xs tracking-[0.26em] text-bakery-charcoal">MARLOW &amp; CO.</span>
+        <span className="hidden gap-4 text-[9px] uppercase tracking-[0.2em] text-bakery-muted sm:flex">
           <span>Mornings</span>
           <span>Menu</span>
           <span>Find us</span>
         </span>
       </div>
-      <p className="mt-6 max-w-[16ch] font-display text-2xl leading-[1.02] text-ink md:text-5xl">
+      <p className="mt-6 max-w-[16ch] font-bakery text-2xl leading-[1.02] text-bakery-charcoal md:text-5xl">
         Baked before the town wakes.
       </p>
-      <p className="mt-4 max-w-sm text-xs leading-relaxed text-ink-soft md:text-sm">
+      <p className="mt-4 max-w-sm text-xs leading-relaxed text-bakery-muted md:text-sm">
         Small-batch sourdough on Maple Row. Out of the oven at seven, gone by nine.
       </p>
-      <span className="rule-draw mt-5 self-start text-[0.65rem] uppercase tracking-[0.24em] text-oxblood">
+      <span className="rule-draw mt-5 self-start text-[0.65rem] uppercase tracking-[0.24em] text-bakery-rust">
         Reserve a loaf &rarr;
       </span>
       <div className="mt-auto flex items-end gap-4 pt-4">
@@ -92,7 +92,7 @@ function ConsideredLayer({ o, y, s }: { o: number; y: number; s: number }) {
           className="h-16 w-28 object-cover md:h-24 md:w-44"
           style={{ filter: "saturate(0.35) contrast(0.96)" }}
         />
-        <span className="pb-1 text-[9px] uppercase tracking-[0.24em] text-ink-soft">
+        <span className="pb-1 text-[9px] uppercase tracking-[0.24em] text-bakery-muted">
           The 6 a.m. bake
         </span>
       </div>
@@ -100,66 +100,25 @@ function ConsideredLayer({ o, y, s }: { o: number; y: number; s: number }) {
   );
 }
 
-/** Stage 3 — unmistakable. Color floods, imagery arrives, intent everywhere. */
+/** Stage 3 — the bakery finds its own identity, not the studio's palette. */
 function BrandLayer({ o, y, s, img }: { o: number; y: number; s: number; img: number }) {
   return (
     <div
       aria-hidden={o < 0.5}
-      className="absolute inset-0 overflow-hidden"
-      style={{
-        opacity: o,
-        transform: `translate3d(0, ${y}px, 0) scale(${s})`,
-        pointerEvents: "none",
-      }}
+      data-bakery-brand
+      className="bakery-brand absolute inset-0 overflow-hidden"
+      style={{ opacity: o, transform: `translate3d(0, ${y}px, 0) scale(${s})`, pointerEvents: "none" }}
     >
-      {/* Photography floods the right */}
-      <div
-        className="absolute inset-y-0 right-0 w-[46%]"
-        style={{ clipPath: `inset(0 0 0 ${(1 - img) * 100}%)` }}
-      >
-        <img
-          src={bakeryImg}
-          alt=""
-          width={1280}
-          height={960}
-          loading="lazy"
-          decoding="async"
-          className="h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/25 to-transparent" />
+      <div className="bakery-wordmark">MARLOW <span className="italic text-bakery-terracotta">&amp;</span> CO.</div>
+      <div className="bakery-photo" style={{ clipPath: `inset(0 ${(1 - img) * 100}% 0 0)` }}>
+        <img src={bakeryImg} alt="Freshly baked artisan bread" width={1280} height={960} loading="lazy" decoding="async"
+          style={{ transform: `scale(${1.12 - img * 0.12}) translateY(${(1 - img) * 5}%)` }} />
       </div>
-
-      <div className="relative flex h-full flex-col p-5 md:p-10">
-        <div className="flex items-center justify-between border-b border-border pb-3">
-          <span className="font-display text-xs tracking-[0.26em] text-ivory">
-            MARLOW <span className="italic text-gold">&amp;</span> CO.
-          </span>
-          <span className="hidden items-center gap-4 text-[9px] uppercase tracking-[0.2em] text-muted-foreground sm:flex">
-            <span>Mornings</span>
-            <span>Menu</span>
-            <span className="bg-gold px-2.5 py-1 tracking-[0.18em] text-ink">Reserve</span>
-          </span>
-        </div>
-        <p className="mt-5 max-w-[13ch] font-display text-[clamp(1.7rem,4.8vw,4.1rem)] leading-[0.92] text-ivory md:mt-8">
-          BAKED BEFORE THE TOWN <span className="italic text-gold-foil">wakes.</span>
-        </p>
-        <p className="mt-4 max-w-[24rem] text-xs leading-relaxed text-muted-foreground md:text-sm">
-          Twenty-two loaves a morning, never more. Reserve by six — or take your chances at the
-          counter.
-        </p>
-        <div className="mt-5 flex flex-wrap items-center gap-3">
-          <span className="bg-gold px-4 py-2.5 text-[9px] uppercase tracking-[0.24em] text-ink">
-            Reserve today&rsquo;s batch
-          </span>
-          <span className="hidden border border-border px-4 py-2.5 text-[9px] uppercase tracking-[0.24em] text-ivory sm:inline-block">
-            The menu
-          </span>
-        </div>
-        <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-2 pt-4 text-[9px] uppercase tracking-[0.22em] text-muted-foreground">
-          <span>Family-run · Maple Row</span>
-          <span className="text-gold">Open 7–12, Wed–Sun</span>
-          <span className="stamp hidden text-oxblood-bright md:inline-block">Worth waking for</span>
-        </div>
+      <div className="bakery-content">
+        <p className="bakery-headline">Baked before<br />the town <em>wakes.</em></p>
+        <p className="bakery-description">Twenty-two loaves a morning, never more. Reserve by six — or take your chances at the counter.</p>
+        <span className="bakery-reserve">Reserve today’s batch <span aria-hidden>↗</span></span>
+        <div className="bakery-footer"><span>Family-run · Maple Row</span><span>Open 7–12, Wed–Sun</span></div>
       </div>
     </div>
   );
@@ -172,9 +131,9 @@ export function Shift() {
 
   const outGeneric = sm(p, 0.16, 0.4);
   const inConsidered = sm(p, 0.18, 0.42);
-  const outConsidered = sm(p, 0.56, 0.78);
-  const inBrand = sm(p, 0.58, 0.8);
-  const stage = p < 0.3 ? 0 : p < 0.69 ? 1 : 2;
+  const outConsidered = sm(p, 0.50, 0.62);
+  const inBrand = sm(p, 0.62, 0.8);
+  const stage = p < 0.3 ? 0 : p < 0.65 ? 1 : 2;
   /** true once the oxblood flood is behind the copy — flip text to paper for contrast */
   const onFlood = inBrand > 0.55;
 
@@ -189,7 +148,7 @@ export function Shift() {
   return (
     <section id="shift" className="paper-grain relative bg-paper text-ink">
       <div ref={ref} className="relative h-[350vh] md:h-[430vh]">
-        <div className="sticky top-0 flex h-[100svh] flex-col justify-center overflow-hidden px-5 pb-4 pt-24 md:px-10 md:pt-28">
+        <div className="shift-stage sticky top-0 flex h-[100svh] flex-col justify-center overflow-hidden px-5 pb-4 pt-24 md:px-10 md:pt-28">
           <span
             aria-hidden
             className="pointer-events-none absolute left-[-5vw] top-[9vh] whitespace-nowrap font-display text-[clamp(7rem,20vw,22rem)] italic leading-none text-outline-ink"
@@ -205,7 +164,7 @@ export function Shift() {
             aria-hidden
             className="absolute inset-y-[36%] right-0 w-[86%] origin-right md:top-[8%] md:bottom-[22%] md:w-[58%]"
             style={{
-              background: "var(--gradient-oxblood)",
+              background: "var(--bakery-terracotta)",
               transform: `scaleX(${inBrand}) rotate(-2deg) translateX(6%)`,
               opacity: inBrand * 0.92,
             }}
@@ -284,14 +243,14 @@ export function Shift() {
                 aria-hidden
                 className="pointer-events-none absolute inset-0"
                 style={{
-                  border: "1px solid var(--signal)",
+                  border: "1px solid var(--bakery-terracotta)",
                   transform: `translate3d(${8 + inBrand * 20}px, ${8 + inBrand * 14}px, 0) rotate(${0.5 + inBrand * 0.7}deg)`,
                   opacity: inBrand * 0.65,
                 }}
               />
 
               <div
-                className="relative h-[40svh] w-full overflow-hidden md:h-[48svh]"
+                className="relative h-[420px] w-full overflow-hidden md:h-[48svh]"
                 style={{
                   clipPath: `inset(${(1 - inConsidered) * 3}% ${Math.max(0, (1 - inBrand) * 3)}% ${Math.max(0, (1 - inBrand) * 3)}% ${(1 - inConsidered) * 3}%)`,
                   transform: `translate3d(0, ${(0.5 - p) * 26}px, ${inBrand * 90}px) scale(${0.94 + inBrand * 0.1}) rotateX(${(1 - inConsidered) * 3}deg)`,
@@ -300,9 +259,9 @@ export function Shift() {
               >
                 {/* background temperature: template gray → paper → ink */}
                 <div className="absolute inset-0 bg-[oklch(0.96_0_0)]" />
-                <div className="absolute inset-0 bg-paper-shade" style={{ opacity: inConsidered }} />
+                <div className="absolute inset-0 bg-bakery-wash" style={{ opacity: inConsidered }} />
                 <div
-                  className="surface-grain absolute inset-0 bg-ink"
+                  className="absolute inset-0 bg-bakery-flour"
                   style={{ opacity: inBrand }}
                 />
 
@@ -316,14 +275,14 @@ export function Shift() {
                   o={inBrand}
                   y={(1 - inBrand) * 24}
                   s={0.97 + inBrand * 0.03}
-                  img={sm(p, 0.66, 0.92)}
+                  img={sm(p, 0.62, 0.86)}
                 />
               </div>
 
               {/* Signal punch — small, cropped, out of the grid */}
               <span
                 aria-hidden
-                className="pointer-events-none absolute -bottom-3 left-4 z-10 bg-signal px-2 py-1 text-[0.55rem] uppercase tracking-[0.26em] text-ink md:left-8"
+                className="pointer-events-none absolute -bottom-3 left-4 z-10 bg-bakery-terracotta px-2 py-1 text-[0.55rem] uppercase tracking-[0.26em] text-bakery-charcoal md:left-8"
                 style={{ opacity: inBrand, transform: `translateY(${(1 - inBrand) * 10}px)` }}
               >
                 Unmistakable
@@ -331,9 +290,9 @@ export function Shift() {
 
               <span
                 aria-hidden
-                className="pointer-events-none absolute left-1/2 top-1/2 z-30 whitespace-nowrap font-display text-[clamp(3.3rem,13vw,12rem)] italic leading-[0.72] text-ivory mix-blend-difference"
+                className="pointer-events-none absolute left-1/2 top-1/2 z-30 hidden whitespace-nowrap md:block font-display text-[clamp(3.3rem,13vw,12rem)] italic leading-[0.72] text-ivory mix-blend-difference"
                 style={{
-                  opacity: sm(p, 0.82, 0.94),
+                  opacity: sm(p, 0.82, 0.94) * 0.12,
                   transform: `translate3d(calc(-50% + ${(1 - inBrand) * 35}vw), -50%, 0) scale(${0.72 + inBrand * 0.32})`,
                 }}
               >
@@ -354,7 +313,7 @@ export function Shift() {
                 className="h-8 w-full cursor-ew-resize appearance-none bg-transparent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-oxblood sm:max-w-sm [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-oxblood [&::-moz-range-track]:h-px [&::-moz-range-track]:bg-[oklch(0.2_0.012_60/30%)] [&::-webkit-slider-runnable-track]:h-px [&::-webkit-slider-runnable-track]:bg-[oklch(0.2_0.012_60/30%)] [&::-webkit-slider-thumb]:mt-[-0.48rem] [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-oxblood"
               />
               <p className="min-w-0 flex-1 text-[0.62rem] leading-relaxed tracking-[0.06em] text-ink-soft/80 md:text-[0.68rem]">
-                {STAGES[stage]!.note}
+                {STAGES[stage]?.note}
               </p>
             </div>
 
