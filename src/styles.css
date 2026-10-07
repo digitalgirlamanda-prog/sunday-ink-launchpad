@@ -266,12 +266,12 @@
 }
 
 @utility text-gold-foil {
-  background: var(--gradient-gold);
-  background-size: 220% 100%;
+  background: linear-gradient(100deg, var(--dust), var(--ivory) 48%, var(--dust));
+  background-size: 180% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: foil-shift 9s var(--ease-ink) infinite alternate;
+  animation: foil-shift 14s var(--ease-ink) infinite alternate;
 }
 
 /* Grain for dark chapters */

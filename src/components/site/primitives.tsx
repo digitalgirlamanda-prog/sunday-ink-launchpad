@@ -149,7 +149,7 @@ export function MagneticLink({
 }
 
 const LABEL_TONES = {
-  gold: "text-gold",
+  gold: "text-dust",
   oxblood: "text-oxblood",
   moss: "text-moss",
   ivory: "text-ivory",

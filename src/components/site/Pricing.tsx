@@ -42,7 +42,7 @@ const TIERS = [
     ],
   },
   {
-    name: "Premier",
+    name: "Elite",
     price: "From $2,499",
     lead: "Custom creative direction for a presence with more moving parts.",
     turnaround: "Custom quoted based on scope.",
@@ -94,24 +94,26 @@ export function Pricing() {
           </h2>
         </Reveal>
 
-        {/* Rate card — editorial bands, not a comparison table */}
+        {/* Large creative editions — information stays immediate, presentation stays editorial. */}
         <div className="mt-14 border-t border-border md:mt-20">
           {TIERS.map((t, i) => (
             <Reveal key={t.name} delay={i * 80}>
               <article
                 className={cn(
-                  "relative grid gap-x-12 gap-y-8 border-b border-border py-12 md:py-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.7fr)_auto] lg:items-start",
-                  t.badge && "bg-ink-raised/40 lg:-mx-8 lg:px-8",
+                  "group relative grid min-h-[72svh] content-center gap-x-12 gap-y-10 overflow-hidden border-b border-border py-16 md:min-h-[78svh] md:py-24 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1.4fr)] lg:items-center",
+                  i % 2 === 1 && "lg:[&>div:first-of-type]:order-2",
                 )}
               >
-                <div>
+                <span aria-hidden className="absolute -right-4 top-1/2 -translate-y-1/2 font-sans text-[18rem] font-semibold leading-none text-ivory/[0.025] transition-transform duration-1000 group-hover:-translate-x-5 md:text-[34rem]">0{i + 1}</span>
+                <div className="relative">
+                  <p className="mb-5 text-[0.58rem] uppercase tracking-[0.34em] text-dust/60">Edition 0{i + 1}</p>
                   <div className="flex flex-wrap items-center gap-4">
-                    <h3 className="font-display text-[clamp(2.1rem,4.6vw,3.6rem)] leading-none text-ivory">
+                    <h3 className="font-display text-[clamp(3.5rem,8vw,8rem)] leading-[0.8] text-ivory">
                       {t.name}
                     </h3>
-                    {t.badge && <span className="stamp text-gold">{t.badge}</span>}
+                    {t.badge && <span className="stamp text-signal">{t.badge}</span>}
                   </div>
-                  <p className="mt-6 font-display text-[clamp(2rem,4vw,3.2rem)] leading-none text-gold-foil">
+                  <p className="mt-8 font-display text-[clamp(2.1rem,4vw,3.5rem)] italic leading-none text-dust">
                     {t.price}
                   </p>
                   <p className="mt-6 max-w-xs text-[0.95rem] leading-relaxed text-muted-foreground">
@@ -119,14 +121,14 @@ export function Pricing() {
                   </p>
                 </div>
 
-                <div>
+                <div className="relative">
                   <ul className="grid gap-x-10 gap-y-0 sm:grid-cols-2">
                     {t.features.map((f) => (
                       <li
                         key={f}
                         className="flex items-baseline gap-3 border-b border-border/50 py-3 text-[0.9rem] leading-relaxed text-ivory/85"
                       >
-                        <span aria-hidden className="h-px w-3 shrink-0 translate-y-[-0.3em] bg-gold/70" />
+                         <span aria-hidden className="h-px w-3 shrink-0 translate-y-[-0.3em] bg-dust/50" />
                         <span>{f}</span>
                       </li>
                     ))}
@@ -136,7 +138,7 @@ export function Pricing() {
                   </p>
                 </div>
 
-                <div className="lg:pt-3">
+                <div className="relative lg:col-start-2">
                   <MagneticLink href="#start" variant={t.badge ? "gold" : "ghost"}>
                     Choose {t.name.toLowerCase()}
                   </MagneticLink>
