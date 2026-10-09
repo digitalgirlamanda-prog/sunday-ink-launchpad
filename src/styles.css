@@ -755,6 +755,49 @@
 .signature-finale .signature-direction { height: 3rem; }
 .signature-finale .signature-direction svg { height: 2rem; width: 2rem; }
 .hero-footer { opacity: 1; }
+.hero-opening-proof {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: clamp(0, calc(1 - var(--hero-p) * 6), 1);
+}
+.opening-fragment {
+  position: absolute;
+  object-fit: cover;
+  object-position: top;
+  box-shadow: var(--shadow-lift);
+  transition: clip-path 1.2s var(--ease-ink);
+}
+.opening-fragment-left {
+  width: 28%; height: 28%; left: 8%; top: 22%;
+  clip-path: polygon(0 3%, 95% 0, 100% 93%, 3% 100%);
+  transform: translateX(calc(var(--hero-p) * -50vw)) rotate(-9deg);
+}
+.opening-fragment-right {
+  width: 14%; height: 35%; right: 12%; top: 33%;
+  clip-path: polygon(4% 0, 100% 4%, 96% 100%, 0 96%);
+  transform: translateX(calc(var(--hero-p) * 50vw)) rotate(8deg);
+}
+.opening-proof-caption {
+  position: absolute;
+  left: 50%; top: 64%;
+  transform: translateX(-50%);
+  color: var(--dust);
+  font-size: .65rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.hero-brand-lockup { z-index: 2; text-shadow: 0 2px 16px var(--ink); }
+#start form label { font-size: .75rem; letter-spacing: 0; }
+@media (max-width: 767px) {
+  .opening-fragment-left { width: 49%; height: 19%; left: -5%; top: 22%; }
+  .opening-fragment-right { width: 27%; height: 24%; right: -2%; top: 34%; }
+  .opening-proof-caption { top: 54%; font-size: .55rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-opening-proof { display: none; }
+}
 @media (max-width: 767px) {
   .signature-action { min-height: 3.5rem; }
   .signature-finale { min-height: 7rem; padding: 1.5rem; font-size: 1rem; gap: 1rem; }
