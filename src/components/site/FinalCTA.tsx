@@ -46,13 +46,14 @@ export function FinalCTA() {
         </Reveal>
 
         <Reveal delay={220}>
-          <div className="mt-14 flex flex-col gap-6 border-t border-border pt-8 md:flex-row md:items-center md:justify-between">
-            <MagneticLink href="#start" className="px-10 py-5">
+          <div className="mt-14 flex flex-col gap-6 border-t border-border pt-8">
+            <MagneticLink href="#start" className="signature-finale">
               Make my business unmissable
             </MagneticLink>
-            <p className="max-w-sm text-[0.62rem] uppercase leading-relaxed tracking-[0.28em] text-dust/80">
-              Sunday &amp; Ink — websites and brand experiences for businesses worth noticing.
-            </p>
+            <div className="flex flex-col justify-between gap-4 text-sm text-dust md:flex-row">
+              <p>Distinctive by design. Built to turn attention into action.</p>
+              <a className="rule-draw text-ivory" href="mailto:Sundayandink@gmail.com">Or email Amanda directly ↗</a>
+            </div>
           </div>
         </Reveal>
       </div>
