@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { ArrowUpRight } from "lucide-react";
 
 export function useReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -85,12 +87,11 @@ export function Reveal({
 }
 
 const LINK_VARIANTS = {
-  gold: "bg-gold text-ink hover:bg-gold-bright",
-  ghost: "border border-border text-ivory hover:border-gold hover:text-gold-bright",
-  ink: "bg-ink text-ivory hover:bg-oxblood",
-  "ghost-ink":
-    "border border-[oklch(0.2_0.012_60/35%)] text-ink hover:border-oxblood hover:text-oxblood",
-  oxblood: "bg-oxblood text-ivory hover:bg-oxblood-bright",
+  gold: "signature-signal",
+  ghost: "signature-outline",
+  ink: "signature-ink",
+  "ghost-ink": "signature-outline-ink",
+  oxblood: "signature-ink",
 } as const;
 
 /** Magnetic CTA with spring-ish easing; disabled for touch + reduced motion. */
@@ -125,6 +126,7 @@ export function MagneticLink({
   };
 
   return (
+    <Button asChild variant="signature" size="signature" className={cn(LINK_VARIANTS[variant], className)}>
     <a
       ref={ref}
       href={href}
@@ -133,18 +135,12 @@ export function MagneticLink({
       onMouseMove={move}
       onMouseLeave={reset}
       onClick={onClick}
-      className={cn(
-        "group relative inline-flex items-center justify-center gap-3 px-8 py-4 text-[0.72rem] font-medium uppercase tracking-[0.28em] transition-[transform,background-color,color,border-color] duration-500 [transition-timing-function:var(--ease-ink)] active:scale-[0.97]",
-        LINK_VARIANTS[variant],
-        className,
-      )}
     >
-      <span className="relative z-10">{children}</span>
-      <span
-        aria-hidden
-        className="h-px w-6 origin-left scale-x-50 bg-current transition-transform duration-500 [transition-timing-function:var(--ease-ink)] group-hover:scale-x-100"
-      />
+      <span aria-hidden className="signature-amp">&amp;</span>
+      <span className="signature-label">{children}</span>
+      <span className="signature-direction" aria-hidden><ArrowUpRight /></span>
     </a>
+    </Button>
   );
 }
 

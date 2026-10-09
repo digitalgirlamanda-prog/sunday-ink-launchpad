@@ -51,6 +51,11 @@ export function Hero() {
     <section id="top" className="relative bg-ink">
       <div ref={scene} className="cinematic-hero relative h-[330svh] md:h-[390vh]">
         <div className="surface-grain sticky top-0 h-[100svh] overflow-hidden bg-ink">
+          <div className="hero-opening-proof" aria-hidden>
+            <img className="opening-fragment opening-fragment-left" src={knoll} alt="" width={1400} height={972} decoding="async" />
+            <img className="opening-fragment opening-fragment-right" src={tiki} alt="" width={640} height={1385} decoding="async" />
+            <span className="opening-proof-caption">Not one look. Your world.</span>
+          </div>
           <div aria-hidden className="hero-worlds absolute inset-0">
             {WORLDS.map((world, index) => (
               <figure key={world.name} className={`hero-world hero-world-${index + 1}`}>
@@ -100,8 +105,8 @@ export function Hero() {
                 </p>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row">
-                <MagneticLink href="#work">Enter the work</MagneticLink>
-                <MagneticLink href="#start" variant="ghost">Make me unmissable</MagneticLink>
+                <MagneticLink href="#start">Make me unmissable</MagneticLink>
+                <MagneticLink href="#work" variant="ghost">Enter the work</MagneticLink>
               </div>
             </div>
           </div>

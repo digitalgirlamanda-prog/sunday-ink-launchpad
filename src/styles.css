@@ -664,3 +664,141 @@
     transform: translateY(100%);
   }
 }
+
+/* Studio actions — an ink impression, a cut edge, a directional seam. */
+.signature-action {
+  --action-bg: var(--signal);
+  --action-fg: var(--ink);
+  --action-line: var(--ink);
+  position: relative;
+  isolation: isolate;
+  display: inline-grid;
+  grid-template-columns: minmax(0, 1fr) 2rem;
+  align-items: center;
+  gap: 1.25rem;
+  max-width: 100%;
+  background: transparent;
+  color: var(--action-fg);
+  border: 0;
+  box-shadow: none;
+  font-family: var(--font-sans);
+  font-size: .7rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  text-align: left;
+  transition: transform .45s var(--ease-ink), color .3s ease;
+}
+.signature-action::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--action-bg);
+  border: 1px solid var(--action-line);
+  clip-path: polygon(0 3%, 97% 0, 100% 22%, 100% 96%, 3% 100%, 0 78%);
+  transition: clip-path .45s var(--ease-ink), transform .45s var(--ease-ink);
+}
+.signature-label { position: relative; z-index: 2; }
+.signature-direction {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 1.9rem;
+  border-left: 1px solid currentColor;
+}
+.signature-direction svg { width: 1.25rem; height: 1.25rem; transition: transform .45s var(--ease-ink); }
+.signature-amp {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: .6rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 3.6rem;
+  line-height: 1;
+  opacity: .1;
+  transform: translateY(-50%) rotate(-12deg);
+  pointer-events: none;
+  transition: transform .65s var(--ease-ink), opacity .45s ease;
+}
+.signature-outline { --action-bg: var(--ink); --action-fg: var(--paper); --action-line: var(--dust); }
+.signature-ink { --action-bg: var(--ink); --action-fg: var(--paper); --action-line: var(--ink); }
+.signature-outline-ink { --action-bg: var(--paper); --action-fg: var(--ink); --action-line: var(--ink); }
+.signature-action:focus-visible { outline: 2px solid var(--signal); outline-offset: 5px; }
+.signature-action:active { transform: translateY(2px); }
+@media (hover: hover) {
+  .signature-action:hover::before { clip-path: polygon(2% 0, 100% 3%, 100% 80%, 98% 100%, 0 97%, 0 20%); transform: rotate(-.7deg); }
+  .signature-action:hover .signature-amp { transform: translateY(-50%) translateX(1.25rem) rotate(8deg); opacity: .22; }
+  .signature-action:hover .signature-direction svg { transform: translate(3px, -3px) rotate(45deg); }
+}
+/* The client keeps its own colors even when borrowing our action choreography. */
+.project-universe .signature-action {
+  --action-bg: var(--world-bg);
+  --action-fg: var(--world-fg);
+  --action-line: var(--world-accent);
+}
+.signature-finale {
+  --action-bg: var(--paper);
+  --action-fg: var(--ink);
+  --action-line: var(--paper);
+  width: 100%;
+  min-height: 8rem;
+  padding: 2rem 2.5rem;
+  font-size: 1.5rem;
+  grid-template-columns: minmax(0, 1fr) 3rem;
+}
+.signature-finale .signature-amp { font-size: 9rem; left: 1rem; }
+.signature-finale .signature-direction { height: 3rem; }
+.signature-finale .signature-direction svg { height: 2rem; width: 2rem; }
+.hero-footer { opacity: 1; }
+.hero-opening-proof {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: clamp(0, calc(1 - var(--hero-p) * 6), 1);
+}
+.opening-fragment {
+  position: absolute;
+  object-fit: cover;
+  object-position: top;
+  box-shadow: var(--shadow-lift);
+  transition: clip-path 1.2s var(--ease-ink);
+}
+.opening-fragment-left {
+  width: 28%; height: 28%; left: 8%; top: 22%;
+  clip-path: polygon(0 3%, 95% 0, 100% 93%, 3% 100%);
+  transform: translateX(calc(var(--hero-p) * -50vw)) rotate(-9deg);
+}
+.opening-fragment-right {
+  width: 14%; height: 35%; right: 12%; top: 33%;
+  clip-path: polygon(4% 0, 100% 4%, 96% 100%, 0 96%);
+  transform: translateX(calc(var(--hero-p) * 50vw)) rotate(8deg);
+}
+.opening-proof-caption {
+  position: absolute;
+  left: 50%; top: 64%;
+  transform: translateX(-50%);
+  color: var(--dust);
+  font-size: .65rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.hero-brand-lockup { z-index: 2; text-shadow: 0 2px 16px var(--ink); }
+#start form label { font-size: .75rem; letter-spacing: 0; }
+@media (max-width: 767px) {
+  .opening-fragment-left { width: 49%; height: 19%; left: -5%; top: 22%; }
+  .opening-fragment-right { width: 27%; height: 24%; right: -2%; top: 34%; }
+  .opening-proof-caption { top: 54%; font-size: .55rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-opening-proof { display: none; }
+}
+@media (max-width: 767px) {
+  .signature-action { min-height: 3.5rem; }
+  .signature-finale { min-height: 7rem; padding: 1.5rem; font-size: 1rem; gap: 1rem; }
+}
