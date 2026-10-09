@@ -100,8 +100,8 @@ export function Hero() {
                 </p>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row">
-                <MagneticLink href="#work">Enter the work</MagneticLink>
-                <MagneticLink href="#start" variant="ghost">Make me unmissable</MagneticLink>
+                <MagneticLink href="#start">Make me unmissable</MagneticLink>
+                <MagneticLink href="#work" variant="ghost">Enter the work</MagneticLink>
               </div>
             </div>
           </div>

@@ -75,13 +75,7 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <span className="text-muted-foreground/60">Instagram — coming soon</span>
-              </li>
-              <li>
-                <span className="text-muted-foreground/60">Facebook — coming soon</span>
-              </li>
-              <li>
-                <span className="text-muted-foreground/60">Pinterest — coming soon</span>
+                <a href="mailto:Sundayandink@gmail.com" className="rule-draw break-all text-ivory hover:text-signal">Sundayandink@gmail.com</a>
               </li>
             </ul>
           </div>

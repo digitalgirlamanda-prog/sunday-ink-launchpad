@@ -10,3 +10,4 @@
 <!-- LOVABLE:END -->
 
 - Keep fictional transformation brand styling scoped through independent semantic tokens and bakery-only font roles so sample identity changes never recolor the studio.
+- Use the shared Button signature variant for studio conversion links and submission actions; project-world actions inherit their own tokens so studio interactions never overwrite a client identity.

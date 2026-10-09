@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { Reveal, SectionLabel } from "./primitives";
+import { Button } from "@/components/ui/button";
+import { ArrowUpRight } from "lucide-react";
 
 const NEEDS = [
   "Website",
@@ -31,15 +33,12 @@ export function Contact() {
     const form = e.currentTarget;
     setSending(true);
     const data = new FormData(form);
-    const name = String(data.get("name") ?? "");
-    setTimeout(() => {
-      setSending(false);
-      toast.success(
-        `Thanks${name ? `, ${name.split(" ")[0]}` : ""} — your project details are on their way.`,
-        { description: "We reply personally, usually within one business day." },
-      );
-      form.reset();
-    }, 600);
+    const body = ["name", "business", "email", "url", "need", "budget", "details"]
+      .map((key) => `${key === "details" ? "Project description" : key}: ${String(data.get(key) ?? "")}`)
+      .join("\n\n");
+    window.location.href = `mailto:Sundayandink@gmail.com?subject=${encodeURIComponent(`New project — ${String(data.get("business") ?? "")}`)}&body=${encodeURIComponent(body)}`;
+    toast.info("Finish sending in your email app.", { description: "Your details stay here if you need to try again." });
+    setSending(false);
   };
 
   return (
@@ -68,8 +67,8 @@ export function Contact() {
             </p>
           </Reveal>
           <Reveal delay={200}>
-            <a href="#start" className="rule-draw mt-8 inline-block text-sm text-gold">
-              Not sure what you need? Tell us what isn&rsquo;t working.
+            <a href="mailto:Sundayandink@gmail.com" className="rule-draw mt-8 inline-block text-sm text-gold">
+              Not sure where to start? Email Amanda directly.
             </a>
           </Reveal>
         </div>
@@ -158,13 +157,18 @@ export function Contact() {
                 />
               </div>
 
-              <button
+              <Button
+                variant="signature"
+                size="signature"
                 type="submit"
                 disabled={sending}
-                className="w-full bg-ink px-8 py-5 text-[0.72rem] uppercase tracking-[0.32em] text-ivory transition-colors duration-500 hover:bg-oxblood active:scale-[0.99] disabled:opacity-60"
+                className="signature-ink w-full"
               >
-                {sending ? "Sending…" : "Start my project"}
-              </button>
+                <span aria-hidden className="signature-amp">&amp;</span>
+                <span className="signature-label">{sending ? "Opening email…" : "Make my business unmissable"}</span>
+                <span className="signature-direction" aria-hidden><ArrowUpRight /></span>
+              </Button>
+              <p className="text-xs text-ink-soft">Opens your email app with your project brief. No commitment.</p>
             </form>
             <span className="stamp absolute -top-3 right-4 text-gold">New project</span>
           </div>
